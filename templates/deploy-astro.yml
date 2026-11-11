@@ -1,3 +1,6 @@
+# === Workflow GitHub Pages pour le site Astro ===
+# À coller dans .github/workflows/deploy.yml (Edit sur GitHub), puis :
+# Settings → Pages → Source : GitHub Actions
 name: Déployer le site sur GitHub Pages
 
 on:
@@ -19,16 +22,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          cache: pip
-      - run: pip install -r requirements.txt
-      - name: Build MkDocs
-        run: mkdocs build --strict --site-dir site
+      - run: npm ci
+      - name: Générer les index (recherche + liste des cas)
+        run: python3 scripts/gen_astro_indexes.py
+      - name: Build Astro
+        run: npx astro build
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: dist
 
   deploy:
     needs: build
