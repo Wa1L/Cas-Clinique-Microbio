@@ -8,6 +8,12 @@ repo_url: https://github.com/Wa1L/Cas-Clinique-Microbio
 repo_name: Wa1L/Cas-Clinique-Microbio
 edit_uri: edit/main/docs/
 
+extra_css:
+  - stylesheets/custom.css
+
+extra_javascript:
+  - javascripts/site.js
+
 theme:
   name: material
   language: fr
@@ -68,5 +74,6 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/Wa1L
 
-copyright: >
-  D'après « Les Cas Cliniques de Microbiologie – Résidanat en Algérie » du Dr Wail NAMOUNE.
+copyright: >-
+  Site par le <strong>Dr Wail NAMOUNE</strong> — « Les Cas Cliniques de Microbiologie
+  · Résidanat en Algérie »

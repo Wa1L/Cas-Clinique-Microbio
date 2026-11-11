@@ -81,3 +81,15 @@ automatiquement (grâce au plugin *awesome-pages*), la recherche aussi.
 - Exposant : `10^3^ UFC/ml` → 10^3^ UFC/ml
 - Encadrer une remarque : `!!! warning "Attention"` puis le texte indenté
 - Tableaux : barres verticales `|` comme dans le modèle
+
+## Fonctionnalités automatiques
+
+Vous n'avez **rien à faire** pour bénéficier de ces fonctions sur vos nouveaux cas :
+
+- **Corrigé masqué** : tout ce qui suit un titre contenant « Corrigé » est
+  automatiquement replié derrière le bouton 📖 *Corrigé* — le lecteur doit cliquer
+  pour l'afficher (s'entraîner avant de regarder la solution !).
+- **Suivi de progression** : le bouton « *Marquer ce cas comme terminé* » apparaît
+  sous le titre de chaque cas. L'état (coches du menu, barres de progression,
+  page « Mes progrès ») est enregistré dans le navigateur du lecteur
+  (`localStorage`) — aucun serveur, aucun compte.
