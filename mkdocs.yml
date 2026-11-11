@@ -1,0 +1,72 @@
+site_name: Cas Cliniques de Microbiologie
+site_description: >-
+  Les Cas Cliniques de Microbiologie – Résidanat en Algérie.
+  218 cas cliniques corrigés, d'après le livre du Dr Wail NAMOUNE.
+site_author: Dr Wail NAMOUNE
+site_url: https://wa1l.github.io/Cas-Clinique-Microbio/
+repo_url: https://github.com/Wa1L/Cas-Clinique-Microbio
+repo_name: Wa1L/Cas-Clinique-Microbio
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: fr
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.back_to_top
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.action.edit
+    - content.action.view
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: Passer en mode sombre
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/weather-sunny
+        name: Passer en mode clair
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search
+  - awesome-pages
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - def_list
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Wa1L
+
+copyright: >
+  D'après « Les Cas Cliniques de Microbiologie – Résidanat en Algérie » du Dr Wail NAMOUNE.
