@@ -78,3 +78,31 @@ Chapitres contenant **moins de 5 cas** :
 - **Infections virales cutanées** (Virologie) — 3 cas seulement
 
 **Total : 219 cas publiés.**
+
+## 🗂️ Fiches de systématique
+
+Section du site : **/fiches/** — résumés d'une page A4 par genre microbien.
+
+| Fiche | Statut |
+|---|---|
+| `src/content/fiches/neisseria.md` | ✅ publié |
+
+**Ajouter une fiche** : `python3 scripts/new_fiche.py "Nom du genre" --part Bactériologie`,
+remplir le contenu, puis `git push`. Guide : [FICHES.md](FICHES.md) · template : `templates/fiche-template.md`.
+
+## 🚀 Migration Astro (novembre 2026)
+
+- Site migré de MkDocs vers **Astro** (build ~3 s, design « Aurora », thème clair/sombre, animations).
+- Contenu : `src/content/cases/` · images : `public/cases/` · design : `src/styles/global.css` · logique : `src/scripts/app.js`.
+- Ajouter un cas ou une fiche ne demande **aucune connaissance Astro** : créer le fichier, `git push`.
+- Permaliens ¶ supprimés (titres propres).
+
+## 🔁 Déploiement — état actuel
+
+- **Le site est en ligne et à jour** (design Astro, fiches, recherche corrigée).
+- Pages est réglé sur **« Deploy from a branch » → `gh-pages`** (build Astro poussé sur cette branche).
+**Pour retrouver le déploiement automatique** à chaque `git push` sur `main` (le token actuel ne peut pas modifier les workflows) :
+  1. sur GitHub : éditer `.github/workflows/deploy.yml` et coller le contenu de `templates/deploy-astro.yml` ;
+  2. Settings → Pages → Source : **GitHub Actions**.
+- En attendant : `npm run build` puis pousser le contenu de `dist/` sur `gh-pages` après chaque ajout.
+
