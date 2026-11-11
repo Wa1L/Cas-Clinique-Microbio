@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Mes progrès" active="progres" page="progres">
+  <h1 class="page-title grad">📊 Mes progrès</h1>
+  <p class="page-lede">
+    ✔ <b>Cas terminés</b> · ★ <b>Favoris à revoir</b> · 🔥 <b>Série journalière</b> ·
+    📉 <b>Statistiques par chapitre</b> (radar et points faibles).
+    Votre progression est enregistrée <b>dans votre navigateur</b> — aucun compte nécessaire.
+  </p>
+
+  <div id="streak-inline"></div>
+  <div id="progress-app">
+    <p>Chargement de votre progression…</p>
+  </div>
+</Base>

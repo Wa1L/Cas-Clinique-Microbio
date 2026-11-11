@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import { totalCases } from '../lib/structure';
+---
+<Base title="Recherche avancée" active="recherche" page="recherche">
+  <h1 class="page-title grad">🔎 Recherche avancée</h1>
+  <p class="page-lede">
+    Recherchez dans les <b>{totalCases} cas cliniques</b> un germe, un antibiotique, un mécanisme
+    de résistance ou un symptôme. Filtrez par <b>partie</b>, par <b>chapitre</b> ou par un
+    <b>tag</b>. La recherche ignore les accents et parcourt le texte intégral des cas, corrigés compris.
+  </p>
+
+  <div id="search-app">
+    <div class="app-panel">
+      <input class="app-input" id="sq-input" type="search"
+        placeholder="Ex. : vancomycine resistant, paludisme, BLSE, meningite…" autocomplete="off" />
+      <div class="app-row">
+        <select class="app-select" id="sq-part">
+          <option value="">Toutes les parties</option>
+        </select>
+        <select class="app-select" id="sq-chap">
+          <option value="">Tous les chapitres</option>
+        </select>
+      </div>
+      <div class="tag-chip-row" id="sq-tags"></div>
+    </div>
+
+    <div class="result-count" id="sq-count">Chargement…</div>
+    <div id="sq-results"></div>
+  </div>
+</Base>

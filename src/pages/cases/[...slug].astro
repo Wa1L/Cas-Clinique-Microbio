@@ -1,0 +1,110 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+import { parts, BASE, caseUrl, caseLabel, caseOrder } from '../../lib/structure';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('cases');
+  const casePaths = posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+  const chapterPaths = parts.flatMap((p) =>
+    p.chapters.map((c) => ({
+      params: { slug: `${p.slug}/${c.slug}` },
+      props: { part: p, chapter: c },
+    }))
+  );
+  return [...casePaths, ...chapterPaths];
+}
+
+const { post, part, chapter } = Astro.props;
+const isChapter = !post;
+let Content = null;
+if (post) Content = (await render(post)).Content;
+
+// données du cas
+const segs = post ? post.id.split('/') : [];
+const partSlug = segs[0], chapSlug = segs[1];
+const casePart = post ? parts.find((p) => p.slug === partSlug) : null;
+const caseChapter = casePart ? casePart.chapters.find((c) => c.slug === chapSlug) : null;
+const label = post ? caseLabel(segs[2]) : '';
+const key = post ? `cases/${post.id}.md` : '';
+const idx = post ? caseOrder.indexOf(key) : -1;
+const prev = idx > 0 ? caseOrder[idx - 1] : null;
+const next = idx >= 0 && idx < caseOrder.length - 1 ? caseOrder[idx + 1] : null;
+const tileLabel = (rel) => caseLabel(rel.replace(/^.*\//, '').replace(/\.md$/, ''));
+---
+<Base title={isChapter ? chapter.title : post.data.title} active="cases" page={isChapter ? 'cases' : 'case'} width={isChapter ? 'wide' : 'narrow'}>
+  <script define:vars={{ totalCases: caseOrder.length }}>
+    document.body.setAttribute('data-total-cases', totalCases);
+  </script>
+
+  {isChapter ? (
+    <>
+      <nav class="crumbs">
+        <a href={`${BASE}/`}>Accueil</a><span class="sep">›</span>
+        <a href={`${BASE}/cases/`}>Cas cliniques</a><span class="sep">›</span>
+        <span>{part.roman} · {part.title}</span>
+      </nav>
+      <header class="case-head">
+        <h1 class="case-h1">{part.icon} {chapter.title}</h1>
+        <div class="case-meta">
+          <span class="chip">{part.roman} · {part.title}</span>
+          <span class="chip plain">{chapter.count} cas</span>
+          <a class="chip plain" href={`${BASE}/impression/?c=${part.slug}/${chapter.slug}`}>🖨️ Imprimer ce chapitre</a>
+        </div>
+      </header>
+      <div class="case-grid" style="margin-top:22px">
+        {chapter.cases.map((f) => {
+          const url = caseUrl(`cases/${part.slug}/${chapter.slug}/${f}.md`);
+          return (
+            <a class="case-tile" href={url} data-case={url}>
+              <span class="ct-num">{caseLabel(f).replace('Cas ', '')}</span>
+              {caseLabel(f)}
+              <span class="ct-status"></span>
+            </a>
+          );
+        })}
+      </div>
+      <div class="part-card" data-part={part.slug} data-total={part.count} style="margin-top:30px">
+        <div class="progress" aria-hidden="true"><div class="progress-bar"></div></div>
+        <span class="progress-text">…</span>
+      </div>
+    </>
+  ) : (
+    <div class="case-wrap">
+      <nav class="crumbs">
+        <a href={`${BASE}/`}>Accueil</a><span class="sep">›</span>
+        <a href={`${BASE}/cases/`}>Cas cliniques</a><span class="sep">›</span>
+        {casePart && <a href={`${BASE}/cases/#${casePart.slug}`}>{casePart.roman} · {casePart.title}</a>}
+        {caseChapter && <span class="sep">›</span>}{caseChapter && <a href={`${BASE}/cases/${partSlug}/${chapSlug}/`}>{caseChapter.title}</a>}
+        <span class="sep">›</span><span>{label}</span>
+      </nav>
+
+      <header class="case-head">
+        <h1 class="case-h1">{post.data.title}</h1>
+        <div class="case-meta">
+          {casePart && <span class="chip">{casePart.icon} {casePart.roman} · {casePart.title}</span>}
+          {caseChapter && <span class="chip plain">{caseChapter.title}</span>}
+          {idx >= 0 && <span class="chip plain">{idx + 1} / {caseOrder.length}</span>}
+        </div>
+      </header>
+
+      <div class="progress-actions" id="case-actions"></div>
+
+      <div class="case-content">
+        <Content />
+      </div>
+
+      <nav class="case-pager">
+        {prev ? (
+          <a href={caseUrl(prev)}><span class="cp-dir">← Précédent</span>{tileLabel(prev)}</a>
+        ) : <span></span>}
+        {next ? (
+          <a class="next" href={caseUrl(next)}><span class="cp-dir">Suivant →</span>{tileLabel(next)}</a>
+        ) : <span></span>}
+      </nav>
+    </div>
+  )}
+</Base>

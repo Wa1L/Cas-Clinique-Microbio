@@ -9,8 +9,8 @@ import re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DOCS = os.path.join(ROOT, "docs")
-CASES = os.path.join(DOCS, "cases")
-DATA = os.path.join(DOCS, "assets", "cases.json")
+CASES = os.path.join(ROOT, "src", "content", "cases")
+DATA = os.path.join(ROOT, "public", "data", "cases.json")
 
 ROMAN = {"01": "I", "02": "II", "03": "III", "04": "IV"}
 
@@ -39,13 +39,18 @@ def main():
         total += pcount
         lines.append(f"## {p['icon']} Partie {ROMAN.get(pnum, pnum)} — {p['title'].replace(ROMAN.get(pnum, pnum) + ' · ', '')}")
         lines.append("")
-        lines.append(f"**{pcount} cas** · dossier `docs/cases/{p['slug']}/`")
+        lines.append(f"**{pcount} cas** · dossier `src/content/cases/{p['slug']}/`")
         lines.append("")
         lines.append("| Chapitre | Cas | Dernier fichier | Prochain fichier | Images |")
         lines.append("|---|---|---|---|---|")
         for s in p["sections"]:
+            if not s["cases"]:
+                imgs = images_count(f"{p['slug']}/{s['slug']}")
+                imgtxt = f"{imgs}" if imgs else "—"
+                lines.append(f"| {s['title']} | 0 | — | *à créer* | {imgtxt} |")
+                continue
             last = s["cases"][-1]
-            m = re.match(r"cas-(\d+)-(\d+)\.md$", os.path.basename(last))
+            m = re.match(r"cas-(\d+)-(\d+)$", os.path.basename(last))
             if m:
                 nxt = f"cas-{m.group(1)}-{int(m.group(2)) + 1:02d}.md"
                 lastf = os.path.basename(last)

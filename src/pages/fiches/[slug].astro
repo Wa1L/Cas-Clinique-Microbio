@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { BASE, AUTHOR } from '../../lib/structure';
+
+export async function getStaticPaths() {
+  const fiches = await getCollection('fiches');
+  return fiches.map((f) => ({ params: { slug: f.id }, props: { fiche: f } }));
+}
+
+const { fiche } = Astro.props;
+const plainTitle = fiche.data.title.replace(/<[^>]+>/g, '');
+---
+<Base title={`Fiche ${plainTitle}`} active="fiches" page="fiche" width="full">
+  <nav class="crumbs">
+    <a href={`${BASE}/`}>Accueil</a><span class="sep">›</span>
+    <a href={`${BASE}/fiches/`}>Fiches</a><span class="sep">›</span>
+    <span set:html={fiche.data.title} />
+  </nav>
+
+  <div class="fiche-toolbar no-print">
+    <button type="button" class="btn" id="fiche-download">💾 HTML</button>
+    <button type="button" class="btn btn-primary" id="fiche-print">🖨️ Imprimer / PDF (A4)</button>
+  </div>
+
+  <div class="fiche-scroll">
+    <div class="fiche-sheet">
+      <div class="wm">{AUTHOR}</div>
+      <div set:html={fiche.body} />
+    </div>
+  </div>
+
+  <p class="no-print" style="text-align:center;color:var(--text-3);font-size:12.5px;margin-top:18px">
+    Fiche de systématique — DEMS Microbiologie · {AUTHOR}
+  </p>
+</Base>

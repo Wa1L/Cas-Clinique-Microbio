@@ -1,0 +1,86 @@
+---
+import Base from '../layouts/Base.astro';
+import { parts, BASE, AUTHOR, totalCases, totalChapters, caseUrl } from '../lib/structure';
+---
+<Base title="Accueil" active="home" page="home" width="wide">
+  <script define:vars={{ totalCases }}>
+    document.body.setAttribute('data-total-cases', totalCases);
+  </script>
+
+  <!-- ============================ HERO ============================ -->
+  <section class="hero">
+    <div class="hero-blob b1"></div>
+    <div class="hero-blob b2"></div>
+    <div class="hero-blob b3"></div>
+    <div class="hero-eyebrow">🩺 Résidanat en Algérie</div>
+    <h1 class="hero-title">
+      Les Cas Cliniques
+      <span class="thin">de Microbiologie</span>
+    </h1>
+    <p class="hero-sub">
+      {totalCases} cas cliniques corrigés, tirés d'annales d'examen et enrichis de corrigés
+      détaillés : bactériologie, virologie et résistance aux antibiotiques. Suivez votre
+      progression, épinglez vos cas difficiles et imprimez vos chapitres.
+    </p>
+    <div class="hero-author"><span class="dot"></span> {AUTHOR}</div>
+    <div class="hero-actions">
+      <a class="btn-hero" href={`${BASE}/cases/`}>📚 Commencer les cas</a>
+      <a class="btn-hero ghost" href={`${BASE}/recherche/`}>🔎 Rechercher</a>
+      <a class="btn-hero ghost" href={`${BASE}/fiches/`}>🗂️ Fiches</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hs-num">{totalCases}</div><div class="hs-label">cas cliniques</div></div>
+      <div class="hero-stat"><div class="hs-num">{parts.length}</div><div class="hs-label">parties</div></div>
+      <div class="hero-stat"><div class="hs-num">{totalChapters}</div><div class="hs-label">chapitres</div></div>
+      <div class="hero-stat"><div class="hs-num">100 %</div><div class="hs-label">corrigés</div></div>
+    </div>
+  </section>
+
+  <!-- ============================ ACCÈS RAPIDES ============================ -->
+  <div class="quick-row">
+    <a class="quick-card" href={`${BASE}/recherche/`}>
+      <span class="qc-icon">🔎</span>
+      <span class="qc-title">Recherche avancée</span>
+      <span class="qc-sub">Par germe, antibiotique, partie ou chapitre</span>
+    </a>
+    <a class="quick-card" href={`${BASE}/progres/`}>
+      <span class="qc-icon">📊</span>
+      <span class="qc-title">Mes progrès</span>
+      <span class="qc-sub">Cas terminés, favoris à revoir, série 🔥</span>
+    </a>
+    <a class="quick-card" href={`${BASE}/impression/`}>
+      <span class="qc-icon">🖨️</span>
+      <span class="qc-title">Impression PDF</span>
+      <span class="qc-sub">Cas sélectionnés ou chapitre entier</span>
+    </a>
+    <a class="quick-card" href={`${BASE}/fiches/`}>
+      <span class="qc-icon">🗂️</span>
+      <span class="qc-title">Fiches de systématique</span>
+      <span class="qc-sub">Résumés d'une page par genre microbien</span>
+    </a>
+  </div>
+
+  <div id="streak-app"></div>
+
+  <!-- ============================ PARTIES ============================ -->
+  {parts.map((p) => (
+    <section class="part-card" data-part={p.slug} data-total={p.count} id={p.slug}>
+      <div class="pc-head">
+        <div class="pc-icon">{p.icon}</div>
+        <div>
+          <h2 class="pc-title">{p.roman} · {p.title}</h2>
+          <div class="pc-sub">{p.count} cas · {p.chapters.length} chapitre{p.chapters.length > 1 ? 's' : ''}</div>
+        </div>
+      </div>
+      <div class="pc-chapters">
+        {p.chapters.map((c) => (
+          <a class="chap-chip" href={`${BASE}/cases/${p.slug}/${c.slug}/`}>
+            {c.title}<span class="cc-count">{c.count}</span>
+          </a>
+        ))}
+      </div>
+      <div class="progress" aria-hidden="true"><div class="progress-bar"></div></div>
+      <span class="progress-text">…</span>
+    </section>
+  ))}
+</Base>

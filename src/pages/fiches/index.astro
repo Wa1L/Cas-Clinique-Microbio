@@ -1,0 +1,52 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { BASE } from '../../lib/structure';
+
+const fiches = (await getCollection('fiches')).sort((a, b) => a.data.order - b.data.order);
+const groups = ['Bactériologie', 'Virologie', 'Mycologie', 'Parasitologie', 'Autre'];
+const ICONS = { 'Bactériologie': '🧫', 'Virologie': '🦠', 'Mycologie': '🍄', 'Parasitologie': '🪱', 'Autre': '🗂️' };
+---
+<Base title="Fiches de systématique" active="fiches" page="fiches" width="wide">
+  <h1 class="page-title grad">🗂️ Fiches de systématique</h1>
+  <p class="page-lede">
+    Résumés d'une page A4 par genre microbien — caractères bactériologiques, épidémiologie,
+    clinique, diagnostic, résistance et traitement. Cliquez sur une fiche pour la consulter
+    ou l'imprimer en PDF.
+  </p>
+
+  {fiches.length === 0 && (
+    <div class="fiche-empty">
+      <div class="fe-icon">🗂️</div>
+      <b>Aucune fiche pour l'instant.</b><br />
+      Les fiches de systématique seront ajoutées prochainement — suivez le dépôt GitHub.
+    </div>
+  )}
+
+  {groups.map((g) => {
+    const list = fiches.filter((f) => f.data.part === g);
+    if (!list.length) return null;
+    return (
+      <section style="margin-top:30px">
+        <div class="chap-header">
+          <h2 style="font-size:19px;font-weight:800;margin:0">{ICONS[g]} {g}</h2>
+          <span class="chip plain">{list.length} fiche{list.length > 1 ? 's' : ''}</span>
+        </div>
+        <div class="case-grid">
+          {list.map((f) => (
+            <a class="fiche-card" href={`${BASE}/fiches/${f.id}/`}>
+              <div class="fc-thumb">
+                <div class="fc-part">{f.data.part}</div>
+                <div class="fc-title" set:html={f.data.title} />
+              </div>
+              <div class="fc-body">
+                <div class="fc-sub">{f.data.subtitle ?? 'Fiche de systématique — DEMS Microbiologie'}</div>
+                <span class="btn btn-sm btn-soft" style="align-self:flex-start">Consulter →</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    );
+  })}
+</Base>

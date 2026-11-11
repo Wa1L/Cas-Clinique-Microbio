@@ -1,0 +1,47 @@
+---
+import Base from '../../layouts/Base.astro';
+import { parts, BASE, caseUrl, caseLabel } from '../../lib/structure';
+---
+<Base title="Cas cliniques" active="cases" page="cases" width="wide">
+  <script define:vars={{ totalCases: parts.reduce((n, p) => n + p.count, 0) }}>
+    document.body.setAttribute('data-total-cases', totalCases);
+  </script>
+
+  <h1 class="page-title grad">📚 Cas cliniques</h1>
+  <p class="page-lede">
+    {parts.reduce((n, p) => n + p.count, 0)} cas classés par partie et par chapitre.
+    Les <b>✔</b> indiquent les cas terminés, les <b>★</b> vos favoris — tout est enregistré dans votre navigateur.
+  </p>
+
+  {parts.map((p) => (
+    <section id={p.slug} style="margin-top:14px">
+      <div class="chap-header" style="margin-top:44px">
+        <h2 class="page-title" style="font-size:26px">{p.icon} {p.roman} · {p.title}</h2>
+        <span class="chip">{p.count} cas</span>
+        <a class="btn btn-sm btn-ghost" style="margin-left:auto" href={`${BASE}/impression/?c=${p.slug}/*`}>🖨️ Imprimer la partie</a>
+      </div>
+
+      {p.chapters.map((c) => (
+        <div>
+          <div class="chap-header">
+            <h3 style="font-size:17px;font-weight:750;margin:0">{c.title}</h3>
+            <span class="chip plain">{c.count} cas</span>
+            <a class="btn btn-sm btn-ghost" style="margin-left:auto" href={`${BASE}/impression/?c=${p.slug}/${c.slug}`}>🖨️</a>
+          </div>
+          <div class="case-grid">
+            {c.cases.map((f) => {
+              const url = caseUrl(`cases/${p.slug}/${c.slug}/${f}.md`);
+              return (
+                <a class="case-tile" href={url} data-case={url}>
+                  <span class="ct-num">{caseLabel(f).replace('Cas ', '')}</span>
+                  {caseLabel(f)}
+                  <span class="ct-status"></span>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </section>
+  ))}
+</Base>

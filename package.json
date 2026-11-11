@@ -1,0 +1,17 @@
+{
+  "name": "cas-clinique-microbio",
+  "type": "module",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "indexes": "python3 scripts/gen_astro_indexes.py",
+    "fiche": "python3 scripts/new_fiche.py"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "astro": "^5.14.0"
+  }
+}

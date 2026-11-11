@@ -1,0 +1,117 @@
+---
+import '@fontsource-variable/inter';
+import '../styles/global.css';
+import { parts, BASE, AUTHOR, totalCases } from '../lib/structure';
+
+interface Props {
+  title: string;
+  description?: string;
+  active?: string; // clé de navigation active
+  page?: string; // data-page pour app.js
+  width?: 'narrow' | 'wide' | 'full';
+}
+const { title, description = 'Cas cliniques corrigés de Microbiologie — Résidanat en Algérie.', active = '', page = '', width = 'narrow' } = Astro.props;
+const current = Astro.url.pathname;
+
+const mainLinks = [
+  { href: `${BASE}/`, icon: '🏠', label: 'Accueil', key: 'home' },
+  { href: `${BASE}/cases/`, icon: '📚', label: 'Cas cliniques', key: 'cases', count: totalCases },
+  { href: `${BASE}/fiches/`, icon: '🗂️', label: 'Fiches', key: 'fiches' },
+  { href: `${BASE}/recherche/`, icon: '🔎', label: 'Recherche avancée', key: 'recherche' },
+  { href: `${BASE}/progres/`, icon: '📊', label: 'Mes progrès', key: 'progres' },
+  { href: `${BASE}/impression/`, icon: '🖨️', label: 'Impression PDF', key: 'impression' },
+];
+const isActive = (href: string, key: string) =>
+  key === active || (href !== `${BASE}/` && current.startsWith(href));
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} — Cas Cliniques de Microbiologie</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={AUTHOR} />
+    <link rel="icon" href={`data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="24" fill="%237c3aed"/><text x="50" y="68" font-size="52" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold">μ</text></svg>`} />
+    <script is:inline>
+      (function () {
+        var t = localStorage.getItem('ccm_theme');
+        if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      })();
+    </script>
+  </head>
+  <body data-page={page}>
+    <!-- =========================== SIDEBAR =========================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-logo">μ</div>
+        <div>
+          <div class="brand-name">Cas Cliniques</div>
+          <div class="brand-sub">de Microbiologie</div>
+        </div>
+      </div>
+      <div class="side-progress">
+        <div class="sp-label"><span>Progression globale</span><span id="sp-pct">…</span></div>
+        <div class="mini-track"><div class="mini-fill" id="sp-fill"></div></div>
+      </div>
+      <div class="sidebar-inner">
+        <nav class="nav-group" aria-label="Navigation principale">
+          {mainLinks.map((l) => (
+            <a class={`nav-link${isActive(l.href, l.key) ? ' active' : ''}`} href={l.href}>
+              <span class="nl-icon">{l.icon}</span>
+              {l.label}
+              {l.count && <span class="nl-count">{l.count}</span>}
+            </a>
+          ))}
+        </nav>
+        <nav class="nav-group" aria-label="Parties du livre">
+          <div class="nav-group-title">📖 Parties du livre</div>
+          {parts.map((p) => (
+            <a class={`nav-link${current.includes(`/cases/${p.slug}/`) ? ' active' : ''}`} href={`${BASE}/cases/#${p.slug}`}>
+              <span class="nl-icon">{p.icon}</span>
+              {p.roman} · {p.title}
+              <span class="nl-count">{p.count}</span>
+            </a>
+          ))}
+        </nav>
+      </div>
+      <div class="sidebar-foot">
+        <b>{AUTHOR}</b><br />Résidanat en Algérie · Édition 2026
+      </div>
+    </aside>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- =========================== HEADER =========================== -->
+    <header class="site-header">
+      <button class="hdr-burger" id="burger" aria-label="Ouvrir le menu">☰</button>
+      <div class="hdr-title" id="hdr-title">{title}</div>
+      <div class="hdr-spacer"></div>
+      <a class="hdr-search" href={`${BASE}/recherche/`}>
+        <span>🔍</span><span class="hs-text">Rechercher un germe, un antibiotique…</span><kbd>/</kbd>
+      </a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Changer de thème">🌙</button>
+      <a class="gh-link" href="https://github.com/Wa1L/Cas-Clinique-Microbio" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+      </a>
+    </header>
+
+    <!-- =========================== MAIN =========================== -->
+    <main class={`page-main ${width === 'narrow' ? 'page-narrow' : width === 'wide' ? 'page-wide' : ''}`}>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <b>{AUTHOR}</b> — « Les Cas Cliniques de Microbiologie · Résidanat en Algérie »<br />
+      Fait avec <span class="heart">♥</span> pour les résidents · {totalCases} cas cliniques
+    </footer>
+
+    <div class="toast" id="toast"></div>
+    <div id="print-container" style="display:none"></div>
+
+    <script>
+      import '../scripts/app.js';
+    </script>
+  </body>
+</html>
