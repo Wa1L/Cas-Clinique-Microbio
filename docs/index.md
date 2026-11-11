@@ -9,7 +9,7 @@ title: Accueil
 <div class="hero-sub">🩺 Résidanat en Algérie</div>
 <div class="hero-author">Dr Wail NAMOUNE</div>
 <div class="hero-stats">
-<div class="stat"><span class="stat-num">218</span><span class="stat-label">cas cliniques</span></div>
+<div class="stat"><span class="stat-num">219</span><span class="stat-label">cas cliniques</span></div>
 <div class="stat"><span class="stat-num">4</span><span class="stat-label">parties</span></div>
 <div class="stat"><span class="stat-num">26</span><span class="stat-label">chapitres</span></div>
 </div>
@@ -31,22 +31,17 @@ title: Accueil
 <span class="qc-title">Impression PDF</span>
 <span class="qc-sub">Cas sélectionnés ou chapitre entier</span>
 </a>
-<a class="quick-card" href="guide/ajouter-un-cas/">
-<span class="qc-icon">➕</span>
-<span class="qc-title">Contribuer sur GitHub</span>
-<span class="qc-sub">Modèle Markdown + publication en 1 push</span>
-</a>
 </div>
 
 <div id="streak-app"></div>
 
-<div class="part-card" data-part="01-resistance-aux-antibiotiques" data-total="70" markdown>
+<div class="part-card" data-part="01-resistance-aux-antibiotiques" data-total="71" markdown>
 
 ### 🧪 I · Résistance aux antibiotiques
 
 Phénotypes de résistance, mécanismes, BHRe/BLSE et antibiogrammes.
 
-- [Phénotypes de Résistance](cases/01-resistance-aux-antibiotiques/01-phenotypes-de-resistance/cas-1-01.md) <span class="chip">70 cas</span>
+- [Phénotypes de Résistance](cases/01-resistance-aux-antibiotiques/01-phenotypes-de-resistance/cas-1-01.md) <span class="chip">71 cas</span>
 
 <div class="progress" aria-hidden="true"><div class="progress-bar"></div></div>
 <span class="progress-text">…</span>
@@ -119,14 +114,8 @@ puis cliquez pour l'afficher. En haut de chaque cas, vous pouvez :
 - **:material-star: Épingler le cas** — pour les cas difficiles à revoir, listés dans les favoris ;
 - **:material-pencil: Prendre des annotations** — vos notes personnelles sur le cas, enregistrées automatiquement.
 
-La [Recherche avancée](recherche.md) parcourt le texte intégral des 218 cas avec des
+La [Recherche avancée](recherche.md) parcourt le texte intégral des 219 cas avec des
 filtres par partie, chapitre, germe ou antibiotique.
-
-!!! tip "Contribuer"
-
-    Pour ajouter un cas, suivez le [guide d'ajout d'un cas](guide/ajouter-un-cas.md) :
-    créez un fichier `.md` d'après le modèle et poussez-le sur GitHub — le site se
-    reconstruit automatiquement.
 
 !!! quote "Source"
 

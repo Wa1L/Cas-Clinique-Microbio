@@ -13,8 +13,9 @@ du Dr Wail NAMOUNE (Résidanat en Algérie) et peut accueillir de **nouveaux cas
 4. `git commit` + `git push` → le site se reconstruit tout seul (GitHub Actions),
    navigation et recherche incluses.
 
-Le guide détaillé (avec la liste des chapitres) est visible sur le site :
-page **« Ajouter un cas »** (`docs/guide/ajouter-un-cas.md`).
+Le guide détaillé et l'état d'avancement de chaque chapitre sont dans
+[`CHAPTERS.md`](CHAPTERS.md) : dernier cas ajouté, nom du prochain fichier
+à créer, dossiers d'images, etc.
 
 ## Corriger un cas existant
 

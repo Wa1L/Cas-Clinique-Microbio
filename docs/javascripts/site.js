@@ -203,6 +203,18 @@
     wrap.appendChild(fav);
     wrap.appendChild(pr);
     h1.parentNode.insertBefore(wrap, h1.nextSibling);
+
+    // bandeau visible uniquement à l'impression d'un cas seul
+    if (!article.querySelector('.print-casehead')) {
+      var head = document.createElement('div');
+      head.className = 'print-casehead';
+      var name = document.title.replace(/ - .*$/, '');
+      head.innerHTML =
+        '<span>Les Cas Cliniques de Microbiologie — Résidanat en Algérie</span>' +
+        '<span>Dr Wail NAMOUNE</span>';
+      h1.parentNode.insertBefore(head, h1);
+    }
+
     render();
   }
 
@@ -850,6 +862,10 @@
       '<div class="pr-config">' +
       '<p class="pp-hint">Sélectionnez une partie puis un chapitre (ou « Tous les chapitres »), cochez les cas souhaités, ' +
       'vérifiez l\'aperçu puis imprimez ou enregistrez en PDF (<em>Destination → Enregistrer au format PDF</em> dans la fenêtre d\'impression).</p>' +
+      '<div class="pr-options">' +
+      '<label class="pr-check"><input type="checkbox" id="pr-corr" checked> Inclure les corrigés</label>' +
+      '<label class="pr-check"><input type="checkbox" id="pr-cover" checked> Page de couverture</label>' +
+      '</div>' +
       '<div class="sr-filters">' +
       '<select id="pr-part" class="sr-select"><option value="">Choisir une partie…</option></select>' +
       '<select id="pr-sec" class="sr-select" disabled><option value="">Tous les chapitres</option></select>' +
@@ -942,9 +958,15 @@
         statusEl.textContent = 'Chargement des cas… (0/' + rels.length + ')';
         var doc = document.getElementById('print-doc');
         doc.innerHTML = '';
+        var wantCorr = document.getElementById('pr-corr').checked;
+        var wantCover = document.getElementById('pr-cover').checked;
+
+        /* chargement séquentiel : l'ordre de la sélection est conservé */
+        var results = new Array(rels.length);
         var doneCount = 0;
-        var frag = document.createDocumentFragment();
-        rels.forEach(function (rel) {
+        function fetchOne(i) {
+          if (i >= rels.length) { finish(); return; }
+          var rel = rels[i];
           var url = BASE + rel.replace(/\.md$/, '') + '/';
           fetch(url)
             .then(function (r) { return r.text(); })
@@ -955,10 +977,19 @@
               wrapEl.className = 'print-case';
               if (art) {
                 var clone = art.cloneNode(true);
-                ['.progress-actions', '.notes-box'].forEach(function (sel) {
+                ['.progress-actions', '.notes-box', '.print-casehead', '.pp-hint'].forEach(function (sel) {
                   clone.querySelectorAll(sel).forEach(function (x) { x.remove(); });
                 });
-                clone.querySelectorAll('details.corrige').forEach(function (d) { d.open = true; });
+                clone.querySelectorAll('details.corrige').forEach(function (d) {
+                  if (wantCorr) {
+                    d.open = true;
+                  } else {
+                    var note = document.createElement('p');
+                    note.className = 'print-noanswer';
+                    note.textContent = '⏸ Corrigé non inclus (mode révision) — retrouvez-le sur le site.';
+                    d.parentNode.replaceChild(note, d);
+                  }
+                });
                 clone.querySelectorAll('a').forEach(function (a) {
                   var span = document.createElement('span');
                   span.innerHTML = a.innerHTML;
@@ -968,21 +999,51 @@
               } else {
                 wrapEl.textContent = '(cas indisponible : ' + rel + ')';
               }
-              frag.appendChild(wrapEl);
+              results[i] = wrapEl;
             })
-            .catch(function () { })
+            .catch(function () { results[i] = null; })
             .then(function () {
               doneCount++;
               statusEl.textContent = 'Chargement des cas… (' + doneCount + '/' + rels.length + ')';
-              if (doneCount === rels.length) {
-                doc.innerHTML = '';
-                doc.appendChild(frag);
-                printBtn.disabled = false;
-                statusEl.textContent = '✅ Aperçu prêt : ' + rels.length + ' cas. Utilisez « 🖨 Imprimer / PDF » ou Ctrl+P.';
-                doc.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }
+              fetchOne(i + 1);
             });
-        });
+        }
+
+        function finish() {
+          var frag = document.createDocumentFragment();
+
+          /* page de couverture optionnelle */
+          if (wantCover) {
+            var cover = document.createElement('div');
+            cover.className = 'print-cover';
+            var listHtml = [];
+            data.parts.forEach(function (p) {
+              p.sections.forEach(function (sec) {
+                var inSec = sec.cases.filter(function (c) { return rels.indexOf(c) !== -1; });
+                if (!inSec.length) return;
+                listHtml.push('<li>' + p.title.replace(/^.*·\s*/, '') + ' — ' + sec.title + ' : ' + inSec.length + ' cas</li>');
+              });
+            });
+            cover.innerHTML =
+              '<div class="print-cover-brand">Résidanat en Algérie</div>' +
+              '<div class="print-cover-title">Les Cas Cliniques<br>de Microbiologie</div>' +
+              '<div class="print-cover-sub">Sélection d\'impression — ' + rels.length + ' cas</div>' +
+              '<div class="print-cover-author">Dr Wail NAMOUNE</div>' +
+              '<div class="print-cover-date">' + new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) + '</div>' +
+              '<ul class="print-cover-list">' + listHtml.join('') + '</ul>';
+            frag.appendChild(cover);
+          }
+
+          results.forEach(function (el) { if (el) frag.appendChild(el); });
+          doc.appendChild(frag);
+          printBtn.disabled = false;
+          statusEl.textContent = '✅ Aperçu prêt : ' + rels.length + ' cas' +
+            (wantCorr ? ' avec corrigés' : ' (mode révision, sans corrigés)') +
+            '. Utilisez « 🖨 Imprimer / PDF » ou Ctrl+P.';
+          doc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        fetchOne(0);
       });
 
       printBtn.addEventListener('click', function () {
@@ -1009,6 +1070,11 @@
     renderPrintPage();
   }
   init();
+
+  // impression d'une page de cas : corrigés dépliés automatiquement
+  window.addEventListener('beforeprint', function () {
+    document.querySelectorAll('details.corrige').forEach(function (d) { d.open = true; });
+  });
 
   // MkDocs Material instant loading : ré-exécute au changement de page
   if (window.document$) {
