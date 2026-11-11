@@ -78,23 +78,3 @@ Chapitres contenant **moins de 5 cas** :
 - **Infections virales cutanées** (Virologie) — 3 cas seulement
 
 **Total : 219 cas publiés.**
-
-## 🗂️ Fiches de systématique
-
-Section du site : **/fiches/** — résumés d'une page A4 par genre microbien.
-
-| Fiche | Statut |
-|---|---|
-| `src/content/fiches/neisseria.md` | ✅ Exemple publié (modifiable ou supprimable) |
-
-**Pour ajouter une fiche** : `python3 scripts/new_fiche.py "Nom du genre" --part Bactériologie`,
-remplir le contenu, puis `git push` — guide complet dans [`FICHES.md`](FICHES.md).
-Le template vierge est dans `templates/fiche-template.md`.
-
-## 🚀 Migration Astro (novembre 2026)
-
-Le site est passé de MkDocs à **Astro** (plus rapide, plus esthétique, build en ~3 s).
-- Contenu : `src/content/cases/` (un cas = un `.md`, inchangé) · images : `public/cases/`
-- Pages : `src/pages/` · design : `src/styles/global.css` · logique client : `src/scripts/app.js`
-- Ajouter un cas ou une fiche ne demande **aucune connaissance Astro** : créer le fichier, `git push`.
-- En local : `npm install` puis `npm run dev` ; les index de recherche se régénèrent à chaque build (`npm run indexes`).
