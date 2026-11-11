@@ -79,12 +79,18 @@
      "cas-1-68",
      "cas-1-69",
      "cas-1-70",
-     "cas-1-71"
+     "cas-1-71",
+     "cas-1-72",
+     "cas-1-73",
+     "cas-1-74",
+     "cas-1-75",
+     "cas-1-76",
+     "cas-1-77"
     ],
-    "count": 71
+    "count": 77
    }
   ],
-  "count": 71
+  "count": 77
  },
  {
   "slug": "02-virologie",
@@ -92,12 +98,6 @@
   "roman": "II",
   "icon": "🦠",
   "chapters": [
-   {
-    "slug": "01-infections-gastroenteriques-virales",
-    "title": "Infections gastroentériques virales",
-    "cases": [],
-    "count": 0
-   },
    {
     "slug": "02-infections-respiratoires-virales",
     "title": "Infections Respiratoires Virales",
@@ -107,12 +107,6 @@
      "cas-3-03"
     ],
     "count": 3
-   },
-   {
-    "slug": "03-infections-virales-du-s-n-c",
-    "title": "Infections virales du S.N.C",
-    "cases": [],
-    "count": 0
    },
    {
     "slug": "04-infections-virales-cutanees",
@@ -156,18 +150,6 @@
     "count": 2
    },
    {
-    "slug": "07-fievres-hemorragiques-virales",
-    "title": "Fièvres Hémorragiques Virales",
-    "cases": [],
-    "count": 0
-   },
-   {
-    "slug": "08-infections-chez-id-et-le-greffe",
-    "title": "Infections chez ID et le Greffé",
-    "cases": [],
-    "count": 0
-   },
-   {
     "slug": "09-infections-virales-du-foetus-et-nne",
     "title": "Infections Virales du fœtus et Nné",
     "cases": [
@@ -196,18 +178,6 @@
      "cas-11-01"
     ],
     "count": 1
-   },
-   {
-    "slug": "11-chimiotherapie-antivirale",
-    "title": "Chimiothérapie Antivirale",
-    "cases": [],
-    "count": 0
-   },
-   {
-    "slug": "12-serums-et-vaccins",
-    "title": "Sérums et Vaccins",
-    "cases": [],
-    "count": 0
    }
   ],
   "count": 39

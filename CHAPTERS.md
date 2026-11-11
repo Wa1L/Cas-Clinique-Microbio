@@ -6,11 +6,11 @@
 
 ## 🧪 Partie I — Résistance aux antibiotiques
 
-**71 cas** · dossier `src/content/cases/01-resistance-aux-antibiotiques/`
+**77 cas** · dossier `src/content/cases/01-resistance-aux-antibiotiques/`
 
 | Chapitre | Cas | Dernier fichier | Prochain fichier | Images |
 |---|---|---|---|---|
-| Phénotypes de Résistance | 71 | `cas-1-71` | `cas-1-72.md` | — |
+| Phénotypes de Résistance | 77 | `cas-1-77` | `cas-1-78.md` | — |
 
 ## 🦠 Partie II — Virologie
 
@@ -18,18 +18,12 @@
 
 | Chapitre | Cas | Dernier fichier | Prochain fichier | Images |
 |---|---|---|---|---|
-| Infections gastroentériques virales | 0 | — | *à créer* | — |
 | Infections Respiratoires Virales | 3 | `cas-3-03` | `cas-3-04.md` | — |
-| Infections virales du S.N.C | 0 | — | *à créer* | — |
 | Infections virales cutanées | 3 | `cas-5-03` | `cas-5-04.md` | — |
 | Les Hépatites virales | 15 | `cas-6-15` | `cas-6-16.md` | — |
 | Zoonoses Virales | 2 | `cas-7-02` | `cas-7-03.md` | — |
-| Fièvres Hémorragiques Virales | 0 | — | *à créer* | — |
-| Infections chez ID et le Greffé | 0 | — | *à créer* | — |
 | Infections Virales du fœtus et Nné | 15 | `cas-10-15` | `cas-10-16.md` | — |
 | Infections Oculaires | 1 | `cas-11-01` | `cas-11-02.md` | — |
-| Chimiothérapie Antivirale | 0 | — | *à créer* | — |
-| Sérums et Vaccins | 0 | — | *à créer* | — |
 
 ## 🧫 Partie III — Bactériologie
 
@@ -62,12 +56,6 @@
 
 Chapitres contenant **moins de 5 cas** :
 
-- **Chimiothérapie Antivirale** (Virologie) — 0 cas seulement
-- **Fièvres Hémorragiques Virales** (Virologie) — 0 cas seulement
-- **Infections chez ID et le Greffé** (Virologie) — 0 cas seulement
-- **Infections gastroentériques virales** (Virologie) — 0 cas seulement
-- **Infections virales du S.N.C** (Virologie) — 0 cas seulement
-- **Sérums et Vaccins** (Virologie) — 0 cas seulement
 - **Infections Cutanées Bactériennes** (Bactériologie) — 1 cas seulement
 - **Infections Oculaires** (Virologie) — 1 cas seulement
 - **Fondamentale Bactérienne** (Bactériologie) — 2 cas seulement
@@ -77,7 +65,7 @@ Chapitres contenant **moins de 5 cas** :
 - **Infections Respiratoires Virales** (Virologie) — 3 cas seulement
 - **Infections virales cutanées** (Virologie) — 3 cas seulement
 
-**Total : 219 cas publiés.**
+**Total : 225 cas publiés.**
 
 ## 🗂️ Fiches de systématique
 

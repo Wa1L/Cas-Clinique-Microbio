@@ -5,9 +5,10 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "python3 scripts/refresh_structure.py && python3 scripts/gen_astro_indexes.py",
     "build": "astro build",
     "preview": "astro preview",
-    "indexes": "python3 scripts/gen_astro_indexes.py",
+    "indexes": "python3 scripts/refresh_structure.py && python3 scripts/gen_astro_indexes.py",
     "fiche": "python3 scripts/new_fiche.py"
   },
   "dependencies": {
