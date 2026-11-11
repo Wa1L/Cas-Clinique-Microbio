@@ -35,7 +35,7 @@ const prev = idx > 0 ? caseOrder[idx - 1] : null;
 const next = idx >= 0 && idx < caseOrder.length - 1 ? caseOrder[idx + 1] : null;
 const tileLabel = (rel) => caseLabel(rel.replace(/^.*\//, '').replace(/\.md$/, ''));
 ---
-<Base title={isChapter ? chapter.title : post.data.title} active="cases" page={isChapter ? 'cases' : 'case'} width={isChapter ? 'wide' : 'narrow'}>
+<Base title={isChapter ? chapter.title : post.data.title} active="cases" page={isChapter ? 'cases' : 'case'} width="wide">
   <script define:vars={{ totalCases: caseOrder.length }}>
     document.body.setAttribute('data-total-cases', totalCases);
   </script>
