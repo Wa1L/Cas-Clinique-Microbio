@@ -30,8 +30,10 @@ jobs:
         with:
           python-version: '3.12'
       - run: npm ci
-      - name: Générer les index (recherche + liste des cas)
-        run: python3 scripts/gen_astro_indexes.py
+      - name: Générer la structure + les index (recherche + liste des cas)
+        run: |
+          python3 scripts/refresh_structure.py
+          python3 scripts/gen_astro_indexes.py
       - name: Build Astro
         run: npx astro build
       - uses: actions/upload-pages-artifact@v3
