@@ -15,6 +15,26 @@ title: Accueil
 </div>
 </div>
 
+<div class="quick-row">
+<a class="quick-card" href="recherche/">
+<span class="qc-icon">🔎</span>
+<span class="qc-title">Recherche avancée</span>
+<span class="qc-sub">Par germe, antibiotique, partie ou chapitre</span>
+</a>
+<a class="quick-card" href="progres/">
+<span class="qc-icon">📊</span>
+<span class="qc-title">Mes progrès</span>
+<span class="qc-sub">Cas terminés, favoris à revoir, série 🔥</span>
+</a>
+<a class="quick-card" href="guide/ajouter-un-cas/">
+<span class="qc-icon">➕</span>
+<span class="qc-title">Ajouter un cas</span>
+<span class="qc-sub">Modèle Markdown + publication en 1 push</span>
+</a>
+</div>
+
+<div id="streak-app"></div>
+
 <div class="part-card" data-part="01-resistance-aux-antibiotiques" data-total="70" markdown>
 
 ### 🧪 I · Résistance aux antibiotiques
@@ -88,9 +108,14 @@ Cas transversaux mêlant bactériologie et virologie, pour l'entraînement à l'
 ### :bulb: Bon à savoir
 
 Le **corrigé** de chaque cas est masqué par défaut : essayez d'abord par vous-même,
-puis cliquez sur « *Voir le corrigé* ». Cochez **:material-check-circle: Terminé**
-en haut de chaque cas : votre progression est enregistrée dans votre navigateur
-et visible sur la page [Mes progrès](progres.md).
+puis cliquez pour l'afficher. En haut de chaque cas, vous pouvez :
+
+- **:material-check-circle: Marquer le cas comme terminé** — suivi local, visible dans [Mes progrès](progres.md) ;
+- **:material-star: Épingler le cas** — pour les cas difficiles à revoir, listés dans les favoris ;
+- **:material-pencil: Prendre des annotations** — vos notes personnelles sur le cas, enregistrées automatiquement.
+
+La [Recherche avancée](recherche.md) parcourt le texte intégral des 218 cas avec des
+filtres par partie, chapitre, germe ou antibiotique.
 
 !!! tip "Contribuer"
 

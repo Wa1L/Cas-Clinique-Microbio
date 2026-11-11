@@ -17,6 +17,9 @@ extra_javascript:
 theme:
   name: material
   language: fr
+  font:
+    text: Inter
+    code: JetBrains Mono
   features:
     - navigation.tabs
     - navigation.sections
