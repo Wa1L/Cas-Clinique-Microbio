@@ -1,12 +1,14 @@
-/* Cas Cliniques de Microbiologie — interactions
- * 1. Corrigé masqué derrière un bouton (détails repliables)
- * 2. Suivi de progression par cas (localStorage)
- * 3. Favoris / cas à revoir (épinglables, listés dans « Mes progrès »)
- * 4. Annotations personnelles par cas (localStorage)
- * 5. Série (streak) journalière — compteur de cas par jour
- * 6. Recherche avancée — filtres partie/chapitre + germes & antibiotiques
- * 7. Coches dans le menu latéral + barres de progression sur l'accueil
- * 8. Page "Mes progrès"
+/* Cas Cliniques de Microbiologie — Dr Wail NAMOUNE
+ * Interactions :
+ *  1. Corrigé masqué derrière un bouton (détails repliables)
+ *  2. Suivi de progression par cas (localStorage)
+ *  3. Favoris / cas à revoir (épinglables, listés dans « Mes progrès »)
+ *  4. Annotations personnelles par cas (localStorage)
+ *  5. Série (streak) journalière
+ *  6. Recherche avancée — filtres partie/chapitre + germes & antibiotiques
+ *  7. Statistiques par chapitre — radar + points faibles
+ *  8. Impression PDF propre — cas sélectionnés ou chapitres entiers
+ *  9. Coches/étoiles du menu latéral + barres de progression de l'accueil
  */
 (function () {
   'use strict';
@@ -59,6 +61,37 @@
     return chain;
   }
 
+  function normRel(rel) { return '/' + rel.replace(/\.md$/, '/'); }
+  function keyMatches(storeObj, full) {
+    var keys = Object.keys(storeObj);
+    for (var i = 0; i < keys.length; i++) {
+      if (keys[i].slice(-full.length) === full) return true;
+    }
+    return false;
+  }
+  function isDone(key) { return !!read(LS.progress)[key]; }
+  function isFav(key) { return !!read(LS.fav)[key]; }
+
+  function toggleDone(key) {
+    var s = read(LS.progress);
+    var h = read(LS.history);
+    var t = todayStr();
+    if (s[key]) {
+      delete s[key];
+      if (h[t] > 1) { h[t]--; } else { delete h[t]; }
+    } else {
+      s[key] = Date.now();
+      h[t] = (h[t] || 0) + 1;
+    }
+    write(LS.progress, s);
+    write(LS.history, h);
+  }
+  function toggleFav(key) {
+    var s = read(LS.fav);
+    if (s[key]) { delete s[key]; } else { s[key] = Date.now(); }
+    write(LS.fav, s);
+  }
+
   /* ------------------------------------------------------ 1. corrigé replié */
   function wrapCorrige() {
     var article = document.querySelector('.md-content__inner.md-typeset');
@@ -87,31 +120,30 @@
     moved.forEach(function (el) { details.appendChild(el); });
   }
 
-  /* ------------------------------------------- utilitaires cas / favoris */
-  function normRel(rel) { return '/' + rel.replace(/\.md$/, '/'); }
-  function keyMatches(k, full) { return k.slice(-full.length) === full; }
-
-  function isDone(key) { return !!read(LS.progress)[key]; }
-  function isFav(key) { return !!read(LS.fav)[key]; }
-
-  function toggleDone(key) {
-    var s = read(LS.progress);
-    var h = read(LS.history);
-    var t = todayStr();
-    if (s[key]) {
-      delete s[key];
-      if (h[t] > 1) { h[t]--; } else { delete h[t]; }
-    } else {
-      s[key] = Date.now();
-      h[t] = (h[t] || 0) + 1;
-    }
-    write(LS.progress, s);
-    write(LS.history, h);
-  }
-  function toggleFav(key) {
-    var s = read(LS.fav);
-    if (s[key]) { delete s[key]; } else { s[key] = Date.now(); }
-    write(LS.fav, s);
+  /* ------------------------------------------- décoration des titres de cas */
+  var H3_ICONS = [
+    [/^contexte clinique/i, '🔍'],
+    [/^r[ée]sultats?/i, '📊'],
+    [/^questions?\b/i, '❓'],
+    [/^compl[ée]ments/i, '📚'],
+    [/^exercice/i, '✍️'],
+    [/^traitement/i, '💊'],
+    [/^diagnostic/i, '🩺']
+  ];
+  function decorateCase() {
+    var article = document.querySelector('.md-content__inner.md-typeset');
+    if (!article || !isCasePage()) return;
+    article.querySelectorAll('h3').forEach(function (h3) {
+      if (h3.classList.contains('case-h3')) return;
+      var txt = (h3.textContent || '').trim();
+      for (var i = 0; i < H3_ICONS.length; i++) {
+        if (H3_ICONS[i][0].test(txt)) {
+          h3.classList.add('case-h3');
+          h3.setAttribute('data-icon', H3_ICONS[i][1]);
+          break;
+        }
+      }
+    });
   }
 
   /* -------------------------------------------------- 2. barre d'actions du cas */
@@ -134,6 +166,13 @@
     fav.type = 'button';
     fav.className = 'fav-btn';
     fav.title = 'Épingler ce cas dans « Favoris / cas à revoir »';
+
+    var pr = document.createElement('button');
+    pr.type = 'button';
+    pr.className = 'print-btn';
+    pr.innerHTML = '🖨 Imprimer ce cas';
+    pr.title = 'Version PDF propre (questions + corrigé, sans menus)';
+    pr.addEventListener('click', function () { window.print(); });
 
     function render() {
       var done = isDone(key);
@@ -162,6 +201,7 @@
 
     wrap.appendChild(btn);
     wrap.appendChild(fav);
+    wrap.appendChild(pr);
     h1.parentNode.insertBefore(wrap, h1.nextSibling);
     render();
   }
@@ -225,7 +265,6 @@
   function streakStats() {
     var h = read(LS.history);
     var today = todayStr();
-    // série actuelle : jours consécutifs jusqu'à aujourd'hui (ou hier si pas encore fait)
     var cur = 0;
     var d = new Date();
     if (!h[today]) { d.setDate(d.getDate() - 1); }
@@ -234,7 +273,6 @@
       var k = d.getFullYear() + '-' + (m < 10 ? '0' + m : m) + '-' + (day < 10 ? '0' + day : day);
       if (h[k]) { cur++; d.setDate(d.getDate() - 1); } else { break; }
     }
-    // meilleure série
     var dates = Object.keys(h).filter(function (k) { return h[k] > 0; }).sort();
     var best = 0, run = 0, prev = null;
     dates.forEach(function (k) {
@@ -250,13 +288,7 @@
     });
     var totalCases = 0;
     Object.keys(h).forEach(function (k) { totalCases += h[k]; });
-    return {
-      current: cur,
-      best: Math.max(best, cur),
-      today: h[today] || 0,
-      total: totalCases,
-      history: h
-    };
+    return { current: cur, best: Math.max(best, cur), today: h[today] || 0, total: totalCases, history: h };
   }
 
   function renderStreakWidgets() {
@@ -265,7 +297,6 @@
       if (!el) return;
       var st = streakStats();
       var today = todayStr();
-      // mini-graphe : 14 derniers jours
       var bars = [];
       var max = 1;
       var days = [];
@@ -283,7 +314,7 @@
         bars.push('<div class="sk-col' + (d.k === today ? ' is-today' : '') + '" title="' + d.k + ' : ' + d.v + ' cas">' +
           '<div class="sk-bar" style="height:' + (d.v ? Math.max(14, pct) : 6) + '%"></div></div>');
       });
-      var flame = st.current >= 3 ? '🔥' : st.current >= 1 ? '🔥' : '💤';
+      var flame = st.current >= 1 ? '🔥' : '💤';
       var msg = st.current >= 3 ? 'Série impressionnante, continuez !'
         : st.current === 1 ? 'C\'est parti — maintenez la série !'
         : st.today > 0 ? 'Premier cas du jour fait. Continuez !'
@@ -315,25 +346,25 @@
       try { abs = new URL(href, location.href).pathname; } catch (e) { return; }
       abs = abs.replace(/\/(index\.html)?$/, '/');
       var chk = a.querySelector('.nav-check');
-      var isDone = doneKeys.indexOf(abs) !== -1;
-      var isFav = favKeys.indexOf(abs) !== -1;
-      a.classList.toggle('nav-done', isDone);
-      a.classList.toggle('nav-fav', isFav);
-      if (isDone && !chk) {
+      var isDoneLink = doneKeys.indexOf(abs) !== -1;
+      var isFavLink = favKeys.indexOf(abs) !== -1;
+      a.classList.toggle('nav-done', isDoneLink);
+      a.classList.toggle('nav-fav', isFavLink);
+      if (isDoneLink && !chk) {
         chk = document.createElement('span');
         chk.className = 'nav-check';
         chk.textContent = '✔';
         a.appendChild(chk);
-      } else if (!isDone && chk) {
+      } else if (!isDoneLink && chk) {
         chk.remove();
       }
       var star = a.querySelector('.nav-star');
-      if (isFav && !star) {
+      if (isFavLink && !star) {
         star = document.createElement('span');
         star.className = 'nav-star';
         star.textContent = '★';
         a.appendChild(star);
-      } else if (!isFav && star) {
+      } else if (!isFavLink && star) {
         star.remove();
       }
     });
@@ -369,6 +400,53 @@
     return name;
   }
 
+  /* -------- radar SVG (SVG pur, sans bibliothèque) -------- */
+  function radarSVG(size, labels, values) {
+    var cx = size / 2, cy = size / 2 + 8;
+    var R = size / 2 - 40;
+    var n = labels.length;
+    function pt(i, r) {
+      var a = -Math.PI / 2 + i * 2 * Math.PI / n;
+      return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+    }
+    var out = '';
+    for (var g = 1; g <= 4; g++) {
+      var pts = [];
+      for (var i = 0; i < n; i++) { var p = pt(i, R * g / 4); pts.push(p[0].toFixed(1) + ',' + p[1].toFixed(1)); }
+      out += '<polygon points="' + pts.join(' ') + '" class="radar-ring"/>';
+    }
+    for (var i = 0; i < n; i++) {
+      var p2 = pt(i, R);
+      out += '<line x1="' + cx + '" y1="' + cy + '" x2="' + p2[0].toFixed(1) + '" y2="' + p2[1].toFixed(1) + '" class="radar-axis"/>';
+    }
+    var vpts = [];
+    for (var i = 0; i < n; i++) {
+      var v = Math.max(3, values[i]);
+      var p3 = pt(i, R * v / 100);
+      vpts.push(p3[0].toFixed(1) + ',' + p3[1].toFixed(1));
+    }
+    out += '<polygon points="' + vpts.join(' ') + '" class="radar-area"/>';
+    for (var i = 0; i < n; i++) {
+      var p4 = pt(i, R + 14);
+      var anchor = Math.abs(p4[0] - cx) < 12 ? 'middle' : (p4[0] > cx ? 'start' : 'end');
+      var dy = p4[1] < cy ? -2 : (p4[1] > cy + 6 ? 8 : 3);
+      out += '<text x="' + p4[0].toFixed(1) + '" y="' + (p4[1] + dy).toFixed(1) + '" text-anchor="' + anchor + '" class="radar-label" title="' +
+        labels[i].replace(/"/g, '') + '">' + labels[i] + '</text>';
+    }
+    return '<svg class="radar" viewBox="-72 -14 ' + (size + 144) + ' ' + (size + 36) + '">' + out + '</svg>';
+  }
+
+  function shortLabel(s, max) {
+    s = s.replace(/\s+/g, ' ').trim();
+    // évite 10 fois le même préfixe sur un radar
+    s = s.replace(/^(Infections?|Cas cliniques?)\s+/i, '');
+    if (s.length <= max) return s;
+    var cut = s.slice(0, max - 1);
+    var sp = cut.lastIndexOf(' ');
+    if (sp > 4) { cut = cut.slice(0, sp); }
+    return cut + '…';
+  }
+
   function renderProgressPage() {
     var app = document.getElementById('progress-app');
     if (!app) return;
@@ -382,18 +460,18 @@
 
     function build(data) {
       var favStore = read(LS.fav);
+      var progStore = read(LS.progress);
       var totalCases = 0, doneCases = 0, favCount = 0;
-      var meta = {};   // full key -> {rel, url}
       var html = [];
 
-      // section favoris
+      /* ---------- section favoris ---------- */
       var favHtml = [];
       Object.keys(favStore).sort(function (a, b) { return favStore[a] - favStore[b]; }).forEach(function (k) {
         var rel = null;
         data.parts.forEach(function (p) {
           p.sections.forEach(function (sec) {
             sec.cases.forEach(function (c) {
-              if (keyMatches(k, normRel(c))) rel = c;
+              if (k.slice(-normRel(c).length) === normRel(c)) rel = c;
             });
           });
         });
@@ -413,6 +491,22 @@
           '<ul class="pp-list">' + favHtml.join('') + '</ul></div>');
       }
 
+      /* ---------- données par chapitre (pour les stats) ---------- */
+      var chapStats = [];  // {part, partTitle, icon, title, done, total, fav}
+      data.parts.forEach(function (p) {
+        p.sections.forEach(function (sec) {
+          var done = 0, fav = 0;
+          sec.cases.forEach(function (c) {
+            totalCases++;
+            var full = normRel(c);
+            if (keyMatches(progStore, full)) { done++; doneCases++; }
+            if (keyMatches(favStore, full)) { fav++; }
+          });
+          chapStats.push({ pslug: p.slug, ptitle: p.title, icon: p.icon, title: sec.title, done: done, total: sec.cases.length, fav: fav });
+        });
+      });
+
+      /* ---------- liste des cas par partie ---------- */
       data.parts.forEach(function (p) {
         var pTotal = 0, pDone = 0;
         p.sections.forEach(function (sec) { pTotal += sec.cases.length; });
@@ -424,16 +518,13 @@
           block.push('<h3>' + sec.title + '</h3>');
           block.push('<ul class="pp-list">');
           sec.cases.forEach(function (c) {
-            totalCases++;
             var full = normRel(c);
-            meta[full] = c;
-            var done = keyMatches2(read(LS.progress), full);
-            var isFav = keyMatches2(read(LS.fav), full);
-            if (done) { doneCases++; pDone++; }
+            var done = keyMatches(progStore, full);
+            var isFavC = keyMatches(favStore, full);
             var url = BASE + c.replace(/\.md$/, '') + '/';
             block.push(
-              '<li class="pp-case' + (done ? ' is-done' : '') + (isFav ? ' is-fav' : '') + '" data-rel="' + c + '">' +
-              '<a href="' + url + '">' + (isFav ? '⭐ ' : '') + caseLabel(c) + '</a>' +
+              '<li class="pp-case' + (done ? ' is-done' : '') + (isFavC ? ' is-fav' : '') + '" data-rel="' + c + '">' +
+              '<a href="' + url + '">' + (isFavC ? '⭐ ' : '') + caseLabel(c) + '</a>' +
               '<span class="pp-status">' + (done ? '✔ fait' : 'à faire') + '</span>' +
               '</li>');
           });
@@ -447,14 +538,6 @@
         html.push(block.join(''));
       });
 
-      function keyMatches2(storeObj, full) {
-        var keys = Object.keys(storeObj);
-        for (var i = 0; i < keys.length; i++) {
-          if (keys[i].slice(-full.length) === full) return true;
-        }
-        return false;
-      }
-
       var gpct = totalCases ? Math.round(doneCases / totalCases * 100) : 0;
       var head =
         '<div class="pp-summary">' +
@@ -466,6 +549,53 @@
         '<button type="button" id="pp-reset" class="md-button md-button--primary">Réinitialiser ma progression</button>' +
         '</div>' +
         '</div>';
+
+      /* ---------- statistiques par chapitre ---------- */
+      var stats = [];
+      stats.push('<div class="pp-part pp-stats"><h2>📉 Statistiques par chapitre</h2>');
+
+      // radars : une figure par partie ayant >= 3 chapitres
+      var radarBlocks = [];
+      data.parts.forEach(function (p) {
+        var chaps = chapStats.filter(function (c) { return c.pslug === p.slug; });
+        if (chaps.length < 3) return;
+        var labels = chaps.map(function (c) { return shortLabel(c.title, 16); });
+        var values = chaps.map(function (c) { return c.total ? Math.round(c.done / c.total * 100) : 0; });
+        var size = 340;
+        radarBlocks.push(
+          '<figure class="radar-fig"><div class="radar-wrap">' +
+          radarSVG(size, labels, values) +
+          '</div><figcaption>' + p.icon + ' ' + p.title.replace(/^.*·\s*/, '') +
+          ' — pourcentage de cas terminés par chapitre</figcaption></figure>');
+      });
+      if (radarBlocks.length) {
+        stats.push('<div class="radar-grid">' + radarBlocks.join('') + '</div>');
+      }
+
+      // points faibles : chapitres triés par taux de complétion
+      var weak = chapStats.slice().sort(function (a, b) {
+        var pa = a.total ? a.done / a.total : 0;
+        var pb = b.total ? b.done / b.total : 0;
+        if (pa !== pb) return pa - pb;
+        return b.fav - a.fav;
+      });
+      stats.push('<h3>Vos points faibles — chapitres à retravailler en priorité</h3>');
+      stats.push('<div class="weak-list">');
+      weak.forEach(function (c) {
+        var pct = c.total ? Math.round(c.done / c.total * 100) : 0;
+        var cls = pct < 33 ? 'weak-danger' : (pct < 66 ? 'weak-warn' : 'weak-ok');
+        stats.push(
+          '<div class="weak-row ' + cls + '">' +
+          '<span class="weak-name">' + c.icon + ' ' + c.title + '</span>' +
+          '<span class="weak-meta">' + (c.fav ? '⭐ ' + c.fav : '') + '</span>' +
+          '<span class="weak-bar"><span class="weak-fill" style="width:' + pct + '%"></span></span>' +
+          '<span class="weak-pct">' + c.done + '/' + c.total + ' · ' + pct + ' %</span>' +
+          '</div>');
+      });
+      stats.push('</div>');
+      stats.push('<p class="pp-hint">Vert = bien maîtrisé · Orange = en cours · Rouge = à travailler. ⭐ = nombre de cas épinglés « à revoir ».</p>');
+      stats.push('</div>');
+      html.unshift(stats.join(''));
 
       app.innerHTML = head + html.join('');
       app.dataset.ready = '1';
@@ -481,7 +611,6 @@
           var keys = Object.keys(st).filter(function (k) { return k.slice(-full.length) === full; });
           if (keys.length) {
             keys.forEach(function (k) { delete st[k]; });
-            // décrémente le compteur du jour (approximation : jour courant)
             var h = read(LS.history);
             var t = todayStr();
             if (h[t] > 1) { h[t]--; } else { delete h[t]; }
@@ -533,11 +662,12 @@
     app.innerHTML =
       '<div class="sr-panel">' +
       '<div class="sr-inputrow">' +
-      '<input type="search" id="sr-q" class="sr-input" placeholder="Rechercher un germe, un antibiotique, un symptôme…" autocomplete="off">' +
+      '<input type="search" id="sr-q" class="sr-input" placeholder="Rechercher un germe, un antibiotique, un symptôme… (ex : BLSE, e.coli, hépatite)" autocomplete="off">' +
       '</div>' +
       '<div class="sr-filters">' +
       '<select id="sr-part" class="sr-select"><option value="">Toutes les parties</option></select>' +
       '<select id="sr-sec" class="sr-select"><option value="">Tous les chapitres</option></select>' +
+      '<button type="button" id="sr-clear" class="sr-clear">✕ Réinitialiser</button>' +
       '<span id="sr-count" class="sr-count"></span>' +
       '</div>' +
       '<div class="sr-tags" id="sr-tags"></div>' +
@@ -547,6 +677,7 @@
     var input = document.getElementById('sr-q');
     var partSel = document.getElementById('sr-part');
     var secSel = document.getElementById('sr-sec');
+    var clearBtn = document.getElementById('sr-clear');
     var tagsBox = document.getElementById('sr-tags');
     var results = document.getElementById('sr-results');
     var countEl = document.getElementById('sr-count');
@@ -558,7 +689,8 @@
       });
 
     function norm(s) {
-      return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+      // minuscules, sans accents, ET sans points — « e.coli » trouve « E. coli »
+      return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[.']/g, ' ').replace(/\s+/g, ' ');
     }
     function esc(s) {
       return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -575,9 +707,8 @@
         o.value = p.slug;
         o.textContent = p.icon + ' ' + p.title;
         partSel.appendChild(o);
+        p.sections.forEach(function (s) { secTitles[s.slug] = s.title; });
       });
-      d.cases.forEach(function (c) { secTitles[c.s] = c.s; });
-      // chips de tags (top 44)
       var chips = d.tags.slice(0, 44).map(function (t) {
         return '<button type="button" class="sr-chip" data-tag="' + esc(t.n) + '" title="' + t.c + ' cas">' +
           esc(t.n) + ' <span class="sr-chip-c">' + t.c + '</span></button>';
@@ -604,6 +735,15 @@
       });
       partSel.addEventListener('change', function () { fillSecs(); run(); });
       secSel.addEventListener('change', run);
+      clearBtn.addEventListener('click', function () {
+        input.value = '';
+        partSel.value = '';
+        activeTag = '';
+        tagsBox.querySelectorAll('.sr-chip').forEach(function (x) { x.classList.remove('active'); });
+        fillSecs();
+        run();
+        input.focus();
+      });
 
       fillSecs();
       run();
@@ -613,15 +753,14 @@
       secSel.innerHTML = '<option value="">Tous les chapitres</option>';
       if (!data) return;
       var pslug = partSel.value;
-      var seen = {};
-      data.cases.forEach(function (c) {
-        if (pslug && c.p !== pslug) return;
-        if (seen[c.s]) return;
-        seen[c.s] = 1;
-        var o = document.createElement('option');
-        o.value = c.s;
-        o.textContent = c.s;
-        secSel.appendChild(o);
+      data.parts.forEach(function (p) {
+        if (pslug && p.slug !== pslug) return;
+        p.sections.forEach(function (s) {
+          var o = document.createElement('option');
+          o.value = s.slug;
+          o.textContent = s.title;
+          secSel.appendChild(o);
+        });
       });
     }
 
@@ -667,15 +806,15 @@
         }
         n++;
         if (out.length < MAX) {
-          var pt = data.parts.filter(function (p) { return p.slug === c.p; })[0] || { icon: '', title: '' };
-          var done = false;
-          var st = read(LS.progress);
-          var full = normRel(c.f);
-          Object.keys(st).forEach(function (k) { if (k.slice(-full.length) === full) done = true; });
+          var pt = null;
+          for (var k = 0; k < data.parts.length; k++) { if (data.parts[k].slug === c.p) { pt = data.parts[k]; break; } }
+          pt = pt || { icon: '', title: '' };
+          var done = keyMatches(read(LS.progress), normRel(c.f));
+          var favC = keyMatches(read(LS.fav), normRel(c.f));
           out.push(
-            '<a class="sr-item' + (done ? ' is-done' : '') + '" href="' + BASE + c.f.replace(/\.md$/, '') + '/">' +
-            '<span class="sr-item-label">' + esc(c.l) + (done ? ' <span class="sr-done">✔</span>' : '') + '</span>' +
-            '<span class="sr-item-meta">' + pt.icon + ' ' + esc(pt.title) + ' · ' + esc(c.s) + '</span>' +
+            '<a class="sr-item' + (done ? ' is-done' : '') + (favC ? ' is-fav' : '') + '" href="' + BASE + c.f.replace(/\.md$/, '') + '/">' +
+            '<span class="sr-item-label">' + (favC ? '⭐ ' : '') + esc(c.l) + (done ? ' <span class="sr-done">✔</span>' : '') + '</span>' +
+            '<span class="sr-item-meta">' + pt.icon + ' ' + esc(pt.title) + ' · ' + esc(secTitles[c.s] || c.s) + '</span>' +
             (terms.length ? '<span class="sr-item-snippet">' + snippet(c, terms) + '</span>' : '') +
             (c.g.length ? '<span class="sr-item-tags">' + c.g.slice(0, 5).map(function (g) { return '<span class="sr-mini">' + esc(g) + '</span>'; }).join('') + '</span>' : '') +
             '</a>');
@@ -693,27 +832,186 @@
     }
   }
 
-  /* -------------------------------------------------- démarrage */
-  wrapCorrige();
-  addCaseToolbar();
-  addNotes();
-  markNav();
-  updateBars();
-  renderStreakWidgets();
-  renderProgressPage();
-  renderSearchPage();
+  /* -------------------------------------------------- 8. centre d'impression */
+  function renderPrintPage() {
+    var app = document.getElementById('print-app');
+    if (!app) return;
+    if (app.querySelector('.pr-config')) return;
 
-  // MkDocs Material instant loading : re-exécute au changement de page
+    // cache le titre et le texte d'intro de la page à l'impression
+    var article = document.querySelector('.md-content__inner.md-typeset');
+    if (article) {
+      Array.prototype.slice.call(article.children).forEach(function (el) {
+        if (el !== app) { el.classList.add('print-hidden'); }
+      });
+    }
+
+    app.innerHTML =
+      '<div class="pr-config">' +
+      '<p class="pp-hint">Sélectionnez une partie puis un chapitre (ou « Tous les chapitres »), cochez les cas souhaités, ' +
+      'vérifiez l\'aperçu puis imprimez ou enregistrez en PDF (<em>Destination → Enregistrer au format PDF</em> dans la fenêtre d\'impression).</p>' +
+      '<div class="sr-filters">' +
+      '<select id="pr-part" class="sr-select"><option value="">Choisir une partie…</option></select>' +
+      '<select id="pr-sec" class="sr-select" disabled><option value="">Tous les chapitres</option></select>' +
+      '<button type="button" id="pr-all" class="md-button">Tout cocher</button>' +
+      '<button type="button" id="pr-none" class="md-button">Tout décocher</button>' +
+      '</div>' +
+      '<div class="pr-cases" id="pr-cases"></div>' +
+      '<div class="pr-actions">' +
+      '<button type="button" id="pr-load" class="md-button md-button--primary">👁 Charger l\'aperçu</button>' +
+      '<button type="button" id="pr-print" class="pr-print-main" disabled>🖨 Imprimer / PDF</button>' +
+      '<span id="pr-status" class="pr-status"></span>' +
+      '</div>' +
+      '</div>' +
+      '<div id="print-doc" class="print-doc"></div>';
+
+    var partSel = document.getElementById('pr-part');
+    var secSel = document.getElementById('pr-sec');
+    var casesBox = document.getElementById('pr-cases');
+    var loadBtn = document.getElementById('pr-load');
+    var printBtn = document.getElementById('pr-print');
+    var statusEl = document.getElementById('pr-status');
+
+    loadAsset('cases.json')
+      .then(build)
+      .catch(function () {
+        app.innerHTML = '<p class="progress-error">Impossible de charger la liste des cas.</p>';
+      });
+
+    function build(data) {
+      app.dataset.ready = '1';
+      data.parts.forEach(function (p) {
+        var o = document.createElement('option');
+        o.value = p.slug;
+        o.textContent = p.icon + ' ' + p.title + ' (' + p.sections.reduce(function (n, s) { return n + s.cases.length; }, 0) + ' cas)';
+        partSel.appendChild(o);
+      });
+      partSel.addEventListener('change', function () {
+        secSel.innerHTML = '<option value="">Tous les chapitres</option>';
+        secSel.disabled = !partSel.value;
+        if (partSel.value) {
+          data.parts.forEach(function (p) {
+            if (p.slug !== partSel.value) return;
+            p.sections.forEach(function (s) {
+              var o = document.createElement('option');
+              o.value = s.slug;
+              o.textContent = s.title + ' (' + s.cases.length + ' cas)';
+              secSel.appendChild(o);
+            });
+          });
+        }
+        fillCases(data);
+      });
+      secSel.addEventListener('change', function () { fillCases(data); });
+
+      function fillCases(data) {
+        var pslug = partSel.value, sslug = secSel.value;
+        if (!pslug) { casesBox.innerHTML = '<p class="pp-hint">Choisissez d\'abord une partie.</p>'; return; }
+        var items = [];
+        data.parts.forEach(function (p) {
+          if (p.slug !== pslug) return;
+          p.sections.forEach(function (sec) {
+            if (sslug && sec.slug !== sslug) return;
+            sec.cases.forEach(function (c) { items.push({ rel: c, sec: sec.title }); });
+          });
+        });
+        casesBox.innerHTML = items.map(function (it) {
+          var url = BASE + it.rel.replace(/\.md$/, '') + '/';
+          return '<label class="pr-case"><input type="checkbox" value="' + it.rel + '"> ' +
+            '<a href="' + url + '" target="_blank">' + caseLabel(it.rel) + '</a>' +
+            '<span class="pr-secname">' + it.sec + '</span></label>';
+        }).join('') +
+          '<p class="pp-hint">' + items.length + ' cas disponibles dans cette sélection.</p>';
+      }
+
+      function checkedRels() {
+        return Array.prototype.slice.call(casesBox.querySelectorAll('input[type=checkbox]:checked')).map(function (cb) { return cb.value; });
+      }
+
+      document.getElementById('pr-all').addEventListener('click', function () {
+        casesBox.querySelectorAll('input[type=checkbox]').forEach(function (cb) { cb.checked = true; });
+      });
+      document.getElementById('pr-none').addEventListener('click', function () {
+        casesBox.querySelectorAll('input[type=checkbox]').forEach(function (cb) { cb.checked = false; });
+      });
+
+      loadBtn.addEventListener('click', function () {
+        var rels = checkedRels();
+        if (!rels.length) { statusEl.textContent = '⚠️ Cochez au moins un cas.'; return; }
+        printBtn.disabled = true;
+        statusEl.textContent = 'Chargement des cas… (0/' + rels.length + ')';
+        var doc = document.getElementById('print-doc');
+        doc.innerHTML = '';
+        var doneCount = 0;
+        var frag = document.createDocumentFragment();
+        rels.forEach(function (rel) {
+          var url = BASE + rel.replace(/\.md$/, '') + '/';
+          fetch(url)
+            .then(function (r) { return r.text(); })
+            .then(function (txt) {
+              var dp = new DOMParser().parseFromString(txt, 'text/html');
+              var art = dp.querySelector('.md-content__inner.md-typeset');
+              var wrapEl = document.createElement('div');
+              wrapEl.className = 'print-case';
+              if (art) {
+                var clone = art.cloneNode(true);
+                ['.progress-actions', '.notes-box'].forEach(function (sel) {
+                  clone.querySelectorAll(sel).forEach(function (x) { x.remove(); });
+                });
+                clone.querySelectorAll('details.corrige').forEach(function (d) { d.open = true; });
+                clone.querySelectorAll('a').forEach(function (a) {
+                  var span = document.createElement('span');
+                  span.innerHTML = a.innerHTML;
+                  a.parentNode.replaceChild(span, a);
+                });
+                while (clone.firstChild) { wrapEl.appendChild(clone.firstChild); }
+              } else {
+                wrapEl.textContent = '(cas indisponible : ' + rel + ')';
+              }
+              frag.appendChild(wrapEl);
+            })
+            .catch(function () { })
+            .then(function () {
+              doneCount++;
+              statusEl.textContent = 'Chargement des cas… (' + doneCount + '/' + rels.length + ')';
+              if (doneCount === rels.length) {
+                doc.innerHTML = '';
+                doc.appendChild(frag);
+                printBtn.disabled = false;
+                statusEl.textContent = '✅ Aperçu prêt : ' + rels.length + ' cas. Utilisez « 🖨 Imprimer / PDF » ou Ctrl+P.';
+                doc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            });
+        });
+      });
+
+      printBtn.addEventListener('click', function () {
+        if (!document.getElementById('print-doc').children.length) {
+          statusEl.textContent = '⚠️ Chargez d\'abord l\'aperçu.';
+          return;
+        }
+        window.print();
+      });
+    }
+  }
+
+  /* -------------------------------------------------- démarrage */
+  function init() {
+    wrapCorrige();
+    decorateCase();
+    addCaseToolbar();
+    addNotes();
+    markNav();
+    updateBars();
+    renderStreakWidgets();
+    renderProgressPage();
+    renderSearchPage();
+    renderPrintPage();
+  }
+  init();
+
+  // MkDocs Material instant loading : ré-exécute au changement de page
   if (window.document$) {
-    document$.subscribe(function () {
-      wrapCorrige();
-      addCaseToolbar();
-      addNotes();
-      markNav();
-      updateBars();
-      renderStreakWidgets();
-      renderProgressPage();
-      renderSearchPage();
-    });
+    document$.subscribe(init);
   }
 })();

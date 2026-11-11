@@ -225,7 +225,12 @@ def main():
     tag_counts = {}
     for part in manifest["parts"]:
         pslug, ptitle = part["folder"], part["title"]
-        parts_out.append({"slug": pslug, "title": ptitle, "icon": ICONS.get(pslug, "📁")})
+        parts_out.append({
+            "slug": pslug,
+            "title": ptitle,
+            "icon": ICONS.get(pslug, "📁"),
+            "sections": [{"slug": s["folder"], "title": s["title"]} for s in part["sections"]],
+        })
         for sec in part["sections"]:
             sslug, stitle = sec["folder"], sec["title"]
             for fname in sec["cases"]:

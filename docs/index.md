@@ -7,7 +7,7 @@ title: Accueil
 <div class="hero-title">Les Cas Cliniques</div>
 <div class="hero-title2">de Microbiologie</div>
 <div class="hero-sub">🩺 Résidanat en Algérie</div>
-<div class="hero-author">Par le Dr Wail NAMOUNE</div>
+<div class="hero-author">Dr Wail NAMOUNE</div>
 <div class="hero-stats">
 <div class="stat"><span class="stat-num">218</span><span class="stat-label">cas cliniques</span></div>
 <div class="stat"><span class="stat-num">4</span><span class="stat-label">parties</span></div>
@@ -26,9 +26,14 @@ title: Accueil
 <span class="qc-title">Mes progrès</span>
 <span class="qc-sub">Cas terminés, favoris à revoir, série 🔥</span>
 </a>
+<a class="quick-card" href="impression/">
+<span class="qc-icon">🖨</span>
+<span class="qc-title">Impression PDF</span>
+<span class="qc-sub">Cas sélectionnés ou chapitre entier</span>
+</a>
 <a class="quick-card" href="guide/ajouter-un-cas/">
 <span class="qc-icon">➕</span>
-<span class="qc-title">Ajouter un cas</span>
+<span class="qc-title">Contribuer sur GitHub</span>
 <span class="qc-sub">Modèle Markdown + publication en 1 push</span>
 </a>
 </div>
@@ -126,4 +131,4 @@ filtres par partie, chapitre, germe ou antibiotique.
 !!! quote "Source"
 
     D'après « *Les Cas Cliniques de Microbiologie – Résidanat en Algérie* »,
-    **par le Dr Wail NAMOUNE**.
+    **Dr Wail NAMOUNE**.

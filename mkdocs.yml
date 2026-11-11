@@ -6,7 +6,6 @@ site_author: Dr Wail NAMOUNE
 site_url: https://wa1l.github.io/Cas-Clinique-Microbio/
 repo_url: https://github.com/Wa1L/Cas-Clinique-Microbio
 repo_name: Wa1L/Cas-Clinique-Microbio
-edit_uri: edit/main/docs/
 
 extra_css:
   - stylesheets/custom.css
@@ -21,15 +20,13 @@ theme:
     text: Inter
     code: JetBrains Mono
   features:
-    - navigation.tabs
     - navigation.sections
     - navigation.top
     - navigation.back_to_top
     - navigation.indexes
+    - navigation.footer
     - search.suggest
     - search.highlight
-    - content.action.edit
-    - content.action.view
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -78,5 +75,5 @@ extra:
       link: https://github.com/Wa1L
 
 copyright: >-
-  Site par le <strong>Dr Wail NAMOUNE</strong> — « Les Cas Cliniques de Microbiologie
+  <strong>Dr Wail NAMOUNE</strong> — « Les Cas Cliniques de Microbiologie
   · Résidanat en Algérie »
