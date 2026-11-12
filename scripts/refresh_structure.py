@@ -27,6 +27,13 @@ ICONS = {
     "04-mix": "🧩",
 }
 
+# Titres d'affichage pour les nouveaux chapitres (slug -> titre).
+# Sans entrée ici, le titre est dérivé du slug ; ajoute une ligne
+# "partie/chapitre": "Titre complet" après avoir créé un chapitre.
+CHAPTER_TITLES = {
+    "02-virologie/08-infections-chez-id-et-le-greffe": "Infections chez l'immunodéprimé et le greffé",
+}
+
 
 def case_stem_order(stem: str):
     """Tri naturel : cas-3-12 avant cas-3-14, etc."""
@@ -58,7 +65,9 @@ def main():
             )
             chapters.append({
                 "slug": cslug,
-                "title": ochap.get("title", cslug.replace("-", " ").capitalize()),
+                "title": ochap.get("title",
+                                   CHAPTER_TITLES.get(f"{pslug}/{cslug}",
+                                                      cslug.replace("-", " ").capitalize())),
                 "cases": stems,
                 "count": len(stems),
             })

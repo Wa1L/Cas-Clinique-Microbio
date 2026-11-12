@@ -85,12 +85,33 @@
      "cas-1-74",
      "cas-1-75",
      "cas-1-76",
-     "cas-1-77"
+     "cas-1-77",
+     "cas-1-78",
+     "cas-1-79",
+     "cas-1-80",
+     "cas-1-81",
+     "cas-1-82",
+     "cas-1-83",
+     "cas-1-84",
+     "cas-1-85",
+     "cas-1-86",
+     "cas-1-87",
+     "cas-1-88",
+     "cas-1-89",
+     "cas-1-90",
+     "cas-1-91",
+     "cas-1-92",
+     "cas-1-93",
+     "cas-1-94",
+     "cas-1-95",
+     "cas-1-96",
+     "cas-1-97",
+     "cas-1-98"
     ],
-    "count": 77
+    "count": 98
    }
   ],
-  "count": 77
+  "count": 98
  },
  {
   "slug": "02-virologie",
@@ -136,9 +157,12 @@
      "cas-6-12",
      "cas-6-13",
      "cas-6-14",
-     "cas-6-15"
+     "cas-6-15",
+     "cas-6-16",
+     "cas-6-17",
+     "cas-6-18"
     ],
-    "count": 15
+    "count": 18
    },
    {
     "slug": "06-zoonoses-virales",
@@ -146,6 +170,15 @@
     "cases": [
      "cas-7-01",
      "cas-7-02"
+    ],
+    "count": 2
+   },
+   {
+    "slug": "08-infections-chez-id-et-le-greffe",
+    "title": "Infections chez l'immunodéprimé et le greffé",
+    "cases": [
+     "cas-9-01",
+     "cas-9-02"
     ],
     "count": 2
    },
@@ -167,9 +200,10 @@
      "cas-10-12",
      "cas-10-13",
      "cas-10-14",
-     "cas-10-15"
+     "cas-10-15",
+     "cas-10-16"
     ],
-    "count": 15
+    "count": 16
    },
    {
     "slug": "10-infections-oculaires",
@@ -180,7 +214,7 @@
     "count": 1
    }
   ],
-  "count": 39
+  "count": 45
  },
  {
   "slug": "03-bacteriologie",
@@ -207,9 +241,12 @@
      "cas-15-04",
      "cas-15-05",
      "cas-15-06",
-     "cas-15-07"
+     "cas-15-07",
+     "cas-15-08",
+     "cas-15-09",
+     "cas-15-10"
     ],
-    "count": 7
+    "count": 10
    },
    {
     "slug": "03-infections-cutanees-bacteriennes",
@@ -233,9 +270,13 @@
      "cas-17-08",
      "cas-17-09",
      "cas-17-10",
-     "cas-17-11"
+     "cas-17-11",
+     "cas-17-12",
+     "cas-17-13",
+     "cas-17-14",
+     "cas-17-15"
     ],
-    "count": 11
+    "count": 15
    },
    {
     "slug": "05-infections-respiratoires-bacteriennes",
@@ -247,9 +288,11 @@
      "cas-18-04",
      "cas-18-05",
      "cas-18-06",
-     "cas-18-07"
+     "cas-18-07",
+     "cas-18-08",
+     "cas-18-09"
     ],
-    "count": 7
+    "count": 9
    },
    {
     "slug": "06-zoonoses-bacteriennes",
@@ -277,9 +320,10 @@
      "cas-20-06",
      "cas-20-07",
      "cas-20-08",
-     "cas-20-09"
+     "cas-20-09",
+     "cas-20-10"
     ],
-    "count": 9
+    "count": 10
    },
    {
     "slug": "08-infections-osseuses",
@@ -307,9 +351,14 @@
      "cas-22-11",
      "cas-22-12",
      "cas-22-13",
-     "cas-22-14"
+     "cas-22-14",
+     "cas-22-15",
+     "cas-22-16",
+     "cas-22-17",
+     "cas-22-18",
+     "cas-22-19"
     ],
-    "count": 14
+    "count": 19
    },
    {
     "slug": "10-infections-bacteriennes-materno-foetale",
@@ -339,9 +388,12 @@
      "cas-24-12",
      "cas-24-13",
      "cas-24-14",
-     "cas-24-15"
+     "cas-24-15",
+     "cas-24-16",
+     "cas-24-17",
+     "cas-24-18"
     ],
-    "count": 15
+    "count": 18
    },
    {
     "slug": "12-infections-urinaires",
@@ -362,12 +414,20 @@
      "cas-25-13",
      "cas-25-14",
      "cas-25-15",
-     "cas-25-16"
+     "cas-25-16",
+     "cas-25-17",
+     "cas-25-18",
+     "cas-25-19",
+     "cas-25-20",
+     "cas-25-21",
+     "cas-25-22",
+     "cas-25-23",
+     "cas-25-24"
     ],
-    "count": 16
+    "count": 24
    }
   ],
-  "count": 94
+  "count": 120
  },
  {
   "slug": "04-mix",
