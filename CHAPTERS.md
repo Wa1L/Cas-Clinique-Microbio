@@ -6,11 +6,11 @@
 
 ## 🧪 Partie I — Résistance aux antibiotiques
 
-**98 cas** · dossier `src/content/cases/01-resistance-aux-antibiotiques/`
+**106 cas** · dossier `src/content/cases/01-resistance-aux-antibiotiques/`
 
 | Chapitre | Cas | Dernier fichier | Prochain fichier | Images |
 |---|---|---|---|---|
-| Phénotypes de Résistance | 98 | `cas-1-98` | `cas-1-99.md` | — |
+| Phénotypes de Résistance | 106 | `cas-1-106` | `cas-1-107.md` | — |
 
 ## 🦠 Partie II — Virologie
 
@@ -67,7 +67,7 @@ Chapitres contenant **moins de 5 cas** :
 - **Infections Respiratoires Virales** (Virologie) — 3 cas seulement
 - **Infections virales cutanées** (Virologie) — 3 cas seulement
 
-**Total : 278 cas publiés.**
+**Total : 286 cas publiés.**
 
 ## 🗂️ Fiches de systématique
 

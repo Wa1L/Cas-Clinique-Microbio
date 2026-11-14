@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import remarkSupersub from 'remark-supersub';
 
 // https://astro.build/config
 export default defineConfig({
@@ -11,5 +12,6 @@ export default defineConfig({
   },
   markdown: {
     gfm: true,
+    remarkPlugins: [remarkSupersub],
   },
 });
