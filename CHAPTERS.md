@@ -6,21 +6,22 @@
 
 ## 🧪 Partie I — Résistance aux antibiotiques
 
-**106 cas** · dossier `src/content/cases/01-resistance-aux-antibiotiques/`
+**108 cas** · dossier `src/content/cases/01-resistance-aux-antibiotiques/`
 
 | Chapitre | Cas | Dernier fichier | Prochain fichier | Images |
 |---|---|---|---|---|
-| Phénotypes de Résistance | 106 | `cas-1-106` | `cas-1-107.md` | — |
+| Phénotypes de Résistance | 108 | `cas-1-108` | `cas-1-109.md` | — |
 
 ## 🦠 Partie II — Virologie
 
-**45 cas** · dossier `src/content/cases/02-virologie/`
+**49 cas** · dossier `src/content/cases/02-virologie/`
 
 | Chapitre | Cas | Dernier fichier | Prochain fichier | Images |
 |---|---|---|---|---|
-| Infections Respiratoires Virales | 3 | `cas-3-03` | `cas-3-04.md` | — |
-| Infections virales cutanées | 3 | `cas-5-03` | `cas-5-04.md` | — |
-| Les Hépatites virales | 18 | `cas-6-18` | `cas-6-19.md` | — |
+| Infections Respiratoires Virales | 4 | `cas-3-04` | `cas-3-05.md` | — |
+| Infections virales du SNC | 1 | `cas-4-01` | `cas-4-02.md` | — |
+| Infections virales cutanées | 4 | `cas-5-04` | `cas-5-05.md` | — |
+| Les Hépatites virales | 19 | `cas-6-19` | `cas-6-20.md` | — |
 | Zoonoses Virales | 2 | `cas-7-02` | `cas-7-03.md` | — |
 | Infections chez l'immunodéprimé et le greffé | 2 | `cas-9-02` | `cas-9-03.md` | — |
 | Infections Virales du fœtus et Nné | 16 | `cas-10-16` | `cas-10-17.md` | — |
@@ -59,15 +60,16 @@ Chapitres contenant **moins de 5 cas** :
 
 - **Infections Cutanées Bactériennes** (Bactériologie) — 1 cas seulement
 - **Infections Oculaires** (Virologie) — 1 cas seulement
+- **Infections virales du SNC** (Virologie) — 1 cas seulement
 - **Fondamentale Bactérienne** (Bactériologie) — 2 cas seulement
 - **Infections osseuses** (Bactériologie) — 2 cas seulement
 - **Infections chez l'immunodéprimé et le greffé** (Virologie) — 2 cas seulement
 - **Zoonoses Virales** (Virologie) — 2 cas seulement
 - **Infections Bactériennes Materno-foetale** (Bactériologie) — 3 cas seulement
-- **Infections Respiratoires Virales** (Virologie) — 3 cas seulement
-- **Infections virales cutanées** (Virologie) — 3 cas seulement
+- **Infections Respiratoires Virales** (Virologie) — 4 cas seulement
+- **Infections virales cutanées** (Virologie) — 4 cas seulement
 
-**Total : 286 cas publiés.**
+**Total : 292 cas publiés.**
 
 ## 🗂️ Fiches de systématique
 

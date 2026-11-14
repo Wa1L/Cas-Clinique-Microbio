@@ -32,6 +32,7 @@ ICONS = {
 # "partie/chapitre": "Titre complet" après avoir créé un chapitre.
 CHAPTER_TITLES = {
     "02-virologie/08-infections-chez-id-et-le-greffe": "Infections chez l'immunodéprimé et le greffé",
+    "02-virologie/03-infections-virales-du-snc": "Infections virales du SNC",
 }
 
 

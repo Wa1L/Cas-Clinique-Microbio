@@ -114,12 +114,14 @@
      "cas-1-103",
      "cas-1-104",
      "cas-1-105",
-     "cas-1-106"
+     "cas-1-106",
+     "cas-1-107",
+     "cas-1-108"
     ],
-    "count": 106
+    "count": 108
    }
   ],
-  "count": 106
+  "count": 108
  },
  {
   "slug": "02-virologie",
@@ -133,9 +135,18 @@
     "cases": [
      "cas-3-01",
      "cas-3-02",
-     "cas-3-03"
+     "cas-3-03",
+     "cas-3-04"
     ],
-    "count": 3
+    "count": 4
+   },
+   {
+    "slug": "03-infections-virales-du-snc",
+    "title": "Infections virales du SNC",
+    "cases": [
+     "cas-4-01"
+    ],
+    "count": 1
    },
    {
     "slug": "04-infections-virales-cutanees",
@@ -143,9 +154,10 @@
     "cases": [
      "cas-5-01",
      "cas-5-02",
-     "cas-5-03"
+     "cas-5-03",
+     "cas-5-04"
     ],
-    "count": 3
+    "count": 4
    },
    {
     "slug": "05-les-hepatites-virales",
@@ -168,9 +180,10 @@
      "cas-6-15",
      "cas-6-16",
      "cas-6-17",
-     "cas-6-18"
+     "cas-6-18",
+     "cas-6-19"
     ],
-    "count": 18
+    "count": 19
    },
    {
     "slug": "06-zoonoses-virales",
@@ -222,7 +235,7 @@
     "count": 1
    }
   ],
-  "count": 45
+  "count": 49
  },
  {
   "slug": "03-bacteriologie",
