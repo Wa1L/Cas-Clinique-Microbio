@@ -14,14 +14,14 @@
 
 ## 🦠 Partie II — Virologie
 
-**49 cas** · dossier `src/content/cases/02-virologie/`
+**58 cas** · dossier `src/content/cases/02-virologie/`
 
 | Chapitre | Cas | Dernier fichier | Prochain fichier | Images |
 |---|---|---|---|---|
 | Infections Respiratoires Virales | 4 | `cas-3-04` | `cas-3-05.md` | — |
 | Infections virales du SNC | 1 | `cas-4-01` | `cas-4-02.md` | — |
 | Infections virales cutanées | 4 | `cas-5-04` | `cas-5-05.md` | — |
-| Les Hépatites virales | 19 | `cas-6-19` | `cas-6-20.md` | — |
+| Les Hépatites virales | 28 | `cas-6-28` | `cas-6-29.md` | — |
 | Zoonoses Virales | 2 | `cas-7-02` | `cas-7-03.md` | — |
 | Infections chez l'immunodéprimé et le greffé | 2 | `cas-9-02` | `cas-9-03.md` | — |
 | Infections Virales du fœtus et Nné | 16 | `cas-10-16` | `cas-10-17.md` | — |
@@ -69,7 +69,7 @@ Chapitres contenant **moins de 5 cas** :
 - **Infections Respiratoires Virales** (Virologie) — 4 cas seulement
 - **Infections virales cutanées** (Virologie) — 4 cas seulement
 
-**Total : 292 cas publiés.**
+**Total : 301 cas publiés.**
 
 ## 🗂️ Fiches de systématique
 

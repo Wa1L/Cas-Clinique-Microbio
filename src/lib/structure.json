@@ -181,9 +181,18 @@
      "cas-6-16",
      "cas-6-17",
      "cas-6-18",
-     "cas-6-19"
+     "cas-6-19",
+     "cas-6-20",
+     "cas-6-21",
+     "cas-6-22",
+     "cas-6-23",
+     "cas-6-24",
+     "cas-6-25",
+     "cas-6-26",
+     "cas-6-27",
+     "cas-6-28"
     ],
-    "count": 19
+    "count": 28
    },
    {
     "slug": "06-zoonoses-virales",
@@ -235,7 +244,7 @@
     "count": 1
    }
   ],
-  "count": 49
+  "count": 58
  },
  {
   "slug": "03-bacteriologie",
