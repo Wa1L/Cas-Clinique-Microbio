@@ -116,12 +116,74 @@
      "cas-1-105",
      "cas-1-106",
      "cas-1-107",
-     "cas-1-108"
+     "cas-1-108",
+     "cas-1-109",
+     "cas-1-110",
+     "cas-1-111",
+     "cas-1-112",
+     "cas-1-113",
+     "cas-1-114",
+     "cas-1-115",
+     "cas-1-116",
+     "cas-1-117",
+     "cas-1-118",
+     "cas-1-119",
+     "cas-1-120",
+     "cas-1-121",
+     "cas-1-122",
+     "cas-1-123",
+     "cas-1-124",
+     "cas-1-125",
+     "cas-1-126",
+     "cas-1-127",
+     "cas-1-128",
+     "cas-1-129",
+     "cas-1-130",
+     "cas-1-131",
+     "cas-1-132",
+     "cas-1-133",
+     "cas-1-134",
+     "cas-1-135",
+     "cas-1-136",
+     "cas-1-137",
+     "cas-1-138",
+     "cas-1-139",
+     "cas-1-140",
+     "cas-1-141",
+     "cas-1-142",
+     "cas-1-143",
+     "cas-1-144",
+     "cas-1-145",
+     "cas-1-146",
+     "cas-1-147",
+     "cas-1-148",
+     "cas-1-149",
+     "cas-1-150",
+     "cas-1-151",
+     "cas-1-152",
+     "cas-1-153",
+     "cas-1-154",
+     "cas-1-155",
+     "cas-1-156",
+     "cas-1-157",
+     "cas-1-158",
+     "cas-1-159",
+     "cas-1-160",
+     "cas-1-161",
+     "cas-1-162",
+     "cas-1-163",
+     "cas-1-164",
+     "cas-1-165",
+     "cas-1-166",
+     "cas-1-167",
+     "cas-1-168",
+     "cas-1-169",
+     "cas-1-170"
     ],
-    "count": 108
+    "count": 170
    }
   ],
-  "count": 108
+  "count": 170
  },
  {
   "slug": "02-virologie",
@@ -144,9 +206,12 @@
     "slug": "03-infections-virales-du-snc",
     "title": "Infections virales du SNC",
     "cases": [
-     "cas-4-01"
+     "cas-4-01",
+     "cas-4-02",
+     "cas-4-03",
+     "cas-4-04"
     ],
-    "count": 1
+    "count": 4
    },
    {
     "slug": "04-infections-virales-cutanees",
@@ -190,9 +255,22 @@
      "cas-6-25",
      "cas-6-26",
      "cas-6-27",
-     "cas-6-28"
+     "cas-6-28",
+     "cas-6-29",
+     "cas-6-30",
+     "cas-6-31",
+     "cas-6-32",
+     "cas-6-33",
+     "cas-6-34",
+     "cas-6-35",
+     "cas-6-36",
+     "cas-6-37",
+     "cas-6-38",
+     "cas-6-39",
+     "cas-6-40",
+     "cas-6-41"
     ],
-    "count": 28
+    "count": 41
    },
    {
     "slug": "06-zoonoses-virales",
@@ -208,9 +286,11 @@
     "title": "Infections chez l'immunodéprimé et le greffé",
     "cases": [
      "cas-9-01",
-     "cas-9-02"
+     "cas-9-02",
+     "cas-9-03",
+     "cas-9-04"
     ],
-    "count": 2
+    "count": 4
    },
    {
     "slug": "09-infections-virales-du-foetus-et-nne",
@@ -231,9 +311,25 @@
      "cas-10-13",
      "cas-10-14",
      "cas-10-15",
-     "cas-10-16"
+     "cas-10-16",
+     "cas-10-17",
+     "cas-10-18",
+     "cas-10-19",
+     "cas-10-20",
+     "cas-10-21",
+     "cas-10-22",
+     "cas-10-23",
+     "cas-10-24",
+     "cas-10-25",
+     "cas-10-26",
+     "cas-10-27",
+     "cas-10-28",
+     "cas-10-29",
+     "cas-10-30",
+     "cas-10-31",
+     "cas-10-32"
     ],
-    "count": 16
+    "count": 32
    },
    {
     "slug": "10-infections-oculaires",
@@ -244,7 +340,7 @@
     "count": 1
    }
   ],
-  "count": 58
+  "count": 92
  },
  {
   "slug": "03-bacteriologie",
@@ -304,9 +400,11 @@
      "cas-17-12",
      "cas-17-13",
      "cas-17-14",
-     "cas-17-15"
+     "cas-17-15",
+     "cas-17-16",
+     "cas-17-17"
     ],
-    "count": 15
+    "count": 17
    },
    {
     "slug": "05-infections-respiratoires-bacteriennes",
@@ -320,9 +418,11 @@
      "cas-18-06",
      "cas-18-07",
      "cas-18-08",
-     "cas-18-09"
+     "cas-18-09",
+     "cas-18-10",
+     "cas-18-11"
     ],
-    "count": 9
+    "count": 11
    },
    {
     "slug": "06-zoonoses-bacteriennes",
@@ -334,9 +434,10 @@
      "cas-19-04",
      "cas-19-05",
      "cas-19-06",
-     "cas-19-07"
+     "cas-19-07",
+     "cas-19-08"
     ],
-    "count": 7
+    "count": 8
    },
    {
     "slug": "07-bk-et-antituberculeux",
@@ -351,18 +452,33 @@
      "cas-20-07",
      "cas-20-08",
      "cas-20-09",
-     "cas-20-10"
+     "cas-20-10",
+     "cas-20-11",
+     "cas-20-12",
+     "cas-20-13",
+     "cas-20-14",
+     "cas-20-15",
+     "cas-20-16",
+     "cas-20-17",
+     "cas-20-18",
+     "cas-20-19",
+     "cas-20-20",
+     "cas-20-21",
+     "cas-20-22",
+     "cas-20-23",
+     "cas-20-24"
     ],
-    "count": 10
+    "count": 24
    },
    {
     "slug": "08-infections-osseuses",
     "title": "Infections osseuses",
     "cases": [
      "cas-21-01",
-     "cas-21-02"
+     "cas-21-02",
+     "cas-21-03"
     ],
-    "count": 2
+    "count": 3
    },
    {
     "slug": "09-ist-et-autres-infections-generales",
@@ -386,9 +502,14 @@
      "cas-22-16",
      "cas-22-17",
      "cas-22-18",
-     "cas-22-19"
+     "cas-22-19",
+     "cas-22-20",
+     "cas-22-21",
+     "cas-22-22",
+     "cas-22-23",
+     "cas-22-24"
     ],
-    "count": 19
+    "count": 24
    },
    {
     "slug": "10-infections-bacteriennes-materno-foetale",
@@ -396,9 +517,11 @@
     "cases": [
      "cas-23-01",
      "cas-23-02",
-     "cas-23-03"
+     "cas-23-03",
+     "cas-23-04",
+     "cas-23-05"
     ],
-    "count": 3
+    "count": 5
    },
    {
     "slug": "11-infections-bacteriennes-du-snc",
@@ -421,9 +544,10 @@
      "cas-24-15",
      "cas-24-16",
      "cas-24-17",
-     "cas-24-18"
+     "cas-24-18",
+     "cas-24-19"
     ],
-    "count": 18
+    "count": 19
    },
    {
     "slug": "12-infections-urinaires",
@@ -452,12 +576,15 @@
      "cas-25-21",
      "cas-25-22",
      "cas-25-23",
-     "cas-25-24"
+     "cas-25-24",
+     "cas-25-25",
+     "cas-25-26",
+     "cas-25-27"
     ],
-    "count": 24
+    "count": 27
    }
   ],
-  "count": 120
+  "count": 151
  },
  {
   "slug": "04-mix",
