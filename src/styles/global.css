@@ -600,6 +600,16 @@ details.corrige .corrige-body { padding: 4px 20px 8px; }
 .fiche-sheet .box li { margin: 0 0 3.5px 0; padding-left: 11px; text-indent: -11px; }
 .fiche-sheet .box li::before { content: "• "; }
 
+/* Ligne auteur dans le bandeau (fiches v2) */
+.fiche-sheet .banner .au { font-size: 8pt; font-weight: 700; letter-spacing: 0.4px; margin-top: 1px; color: #f1dff5; }
+
+/* Petits tableaux dans les boîtes (fiches v2) */
+.fiche-sheet .box table.mt { width: 100%; border-collapse: collapse; margin: 2px 0 5px 0; font-size: 9.2pt; line-height: 1.25; text-align: left; }
+.fiche-sheet .box table.mt th { background: color-mix(in srgb, var(--c) 14%, #fff); color: var(--c); font-weight: 700; text-align: left; padding: 2px 5px; border: 0.5px solid var(--c); }
+.fiche-sheet .box table.mt td { padding: 2px 5px; border: 0.5px solid #bbb; vertical-align: top; text-align: left; }
+.fiche-sheet .box table.mt td:first-child { font-weight: 700; }
+.fiche-sheet .box table.mt td.c, .fiche-sheet .box table.mt th.c { text-align: center; }
+
 .fiche-sheet .wm {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) rotate(-35deg);
   font-size: 56pt; font-weight: 700; color: rgba(107,42,120,.08); white-space: nowrap;
@@ -772,10 +782,11 @@ details.corrige .corrige-body { padding: 4px 20px 8px; }
   html.printing-fiche .fiche-sheet .banner .t { font-size: 13pt; }
   html.printing-fiche .fiche-sheet .banner .l2 { font-size: 8.6pt; }
   html.printing-fiche .fiche-sheet table.sp { font-size: 9.2pt; margin-bottom: 6px; }
-  html.printing-fiche .fiche-sheet .box { margin-bottom: 6px; }
+  html.printing-fiche .fiche-sheet .banner .au { font-size: 7.2pt; }
+  html.printing-fiche .fiche-sheet .box table.mt { font-size: 7.6pt; }
   html.printing-fiche .fiche-sheet .box .bt { font-size: 8.6pt; padding: 2.5px 7px; }
   html.printing-fiche .fiche-sheet .box .bb { padding: 4px 7px; }
   html.printing-fiche .fiche-sheet .wm { font-size: 44pt; }
-  .fiche-sheet table.sp, .fiche-sheet .box { page-break-inside: avoid; }
+  .fiche-sheet table.sp, .fiche-sheet .box, .fiche-sheet .box table.mt { page-break-inside: avoid; }
 }
 .print-only { display: none; }
