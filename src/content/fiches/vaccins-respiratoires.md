@@ -1,7 +1,7 @@
 ---
 title: "Vaccins disponibles – infections respiratoires virales"
 subtitle: "Fiche de révision – DEMS Microbiologie"
-part: "Virologie"
+part: "Infections respiratoires virales"
 order: 16
 ---
 
