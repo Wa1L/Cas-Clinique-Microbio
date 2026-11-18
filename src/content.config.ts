@@ -15,7 +15,7 @@ const fiches = defineCollection({
   schema: z.object({
     title: z.string(),
     subtitle: z.string().optional(),
-    part: z.enum(['Bactériologie', 'Virologie', 'Mycologie', 'Parasitologie', 'Autre']).default('Bactériologie'),
+    part: z.enum(['Bactériologie', 'Virologie', 'Infections respiratoires virales', 'Mycologie', 'Parasitologie', 'Autre']).default('Bactériologie'),
     order: z.number().default(99),
   }),
 });
