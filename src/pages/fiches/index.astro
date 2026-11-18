@@ -4,8 +4,8 @@ import { getCollection } from 'astro:content';
 import { BASE } from '../../lib/structure';
 
 const fiches = (await getCollection('fiches')).sort((a, b) => a.data.order - b.data.order);
-const groups = ['Bactériologie', 'Virologie', 'Infections respiratoires virales', 'Mycologie', 'Parasitologie', 'Autre'];
-const ICONS = { 'Bactériologie': '🧫', 'Virologie': '🦠', 'Infections respiratoires virales': '🫁', 'Mycologie': '🍄', 'Parasitologie': '🪱', 'Autre': '🗂️' };
+const groups = ['Bactériologie', 'Virologie', 'Infections respiratoires virales', 'Infections virales du SNC', 'Mycologie', 'Parasitologie', 'Autre'];
+const ICONS = { 'Bactériologie': '🧫', 'Virologie': '🦠', 'Infections respiratoires virales': '🫁', 'Infections virales du SNC': '🧠', 'Mycologie': '🍄', 'Parasitologie': '🪱', 'Autre': '🗂️' };
 ---
 <Base title="Fiches de systématique" active="fiches" page="fiches" width="wide">
   <h1 class="page-title grad">🗂️ Fiches de systématique</h1>
