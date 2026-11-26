@@ -15,7 +15,7 @@ const fiches = defineCollection({
   schema: z.object({
     title: z.string(),
     subtitle: z.string().optional(),
-    part: z.enum(['Bactériologie', 'Fondamentale Bactérienne', 'Infections Urinaires', 'Virologie', 'Infections respiratoires virales', 'Infections virales du SNC', 'Infections cutanées virales', 'Zoonoses Virales', 'Techniques de Diagnostic en Virologie', 'Infections virales néonatales', "Infections chez l'ID et le greffé", 'Chimiothérapie antivirale', 'Mycologie', 'Parasitologie', 'Autre']).default('Bactériologie'),
+    part: z.enum(['Bactériologie', 'Fondamentale Bactérienne', 'Gastro-Entériques Bactériennes', 'Infections Urinaires', 'Virologie', 'Infections respiratoires virales', 'Infections virales du SNC', 'Infections cutanées virales', 'Zoonoses Virales', 'Techniques de Diagnostic en Virologie', 'Infections virales néonatales', "Infections chez l'ID et le greffé", 'Chimiothérapie antivirale', 'Mycologie', 'Parasitologie', 'Autre']).default('Bactériologie'),
     order: z.number().default(99),
   }),
 });
