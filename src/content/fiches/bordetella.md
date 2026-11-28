@@ -16,7 +16,7 @@ order: 96
 
 <table class="sp">
   <tr>
-    <th style="width:15%">Espèce</th><th>Mobilité</th><th>Oxyd.</th><th>Catal.</th><th>Uréease</th><th>MacConkey</th><th style="width:44%">Intérêt clinique</th>
+    <th style="width:15%">Espèce</th><th>Mobilité</th><th>Oxyd.</th><th>Catal.</th><th>Uréase</th><th>MacConkey</th><th style="width:44%">Intérêt clinique</th>
   </tr>
   <tr><td><b><i>B. pertussis</i></b></td><td>–</td><td>+</td><td>+</td><td>–</td><td>–</td><td><b>Agent de la coqueluche</b> (humain strict) ; <span class="r">piège : fragile, culture lente (3–7 j)</span></td></tr>
   <tr><td><i>B. parapertussis</i></td><td>–</td><td>–</td><td>+</td><td>+ (24 h)</td><td>var.</td><td>Coqueluche <b>atténuée</b> (homme, mouton) ; culture rapide (1–2 j)</td></tr>
